@@ -1,0 +1,246 @@
+/*
+ * CodeDread stylesheet
+ *
+ * Copyright (c) 2005 and onwards, CodeDread, Jeff Schiller
+ */
+
+body {
+    font-family: "Arial", sans-serif;
+    background-color: white;
+}
+
+div {
+    padding: 5px;
+}
+
+.section p,ul {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.top_pane {
+}
+
+.header_pane {
+    font-size: x-large;
+    padding: 0px;
+    margin: 0px;
+    margin-left: 15px;
+}
+
+.main_pane {
+    margin-top: 0px;
+}
+
+.nav_pane {
+    position: absolute;
+    width: 120px;
+    padding-top: 0px;
+    margin-top: 0px;
+    margin-left: 15px;
+}
+
+.content_pane {
+    margin-left: 150px;
+    width: 650px;
+    background-color: white;
+    padding-top: 0px;
+    margin-top: 0px;
+/*
+    margin-right: 40px;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-left-color: #ddd;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #ddd;
+*/
+}
+
+.footer_pane {
+    text-align: center;
+    font-size: x-small;
+}
+
+a:link {
+    color: #bc4800;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:visited {
+    color: #bc4800;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #bc4800;
+}
+
+h1,h2,h3 {
+    color: #800000;
+}
+
+h1 {
+    text-align: center;
+}
+
+.definition {
+    border-bottom-style: dotted;
+    border-bottom-color: #bc4800;
+    border-bottom-width: 2px;
+}
+
+.author {
+    text-align: right;
+    color: #800000;
+    font-size: x-large;
+}
+
+.prevpage {
+    float: left;
+    font-weight: bold;
+}
+
+.nextpage {
+    float: right;
+    font-weight: bold;
+}
+
+.currentpage {
+    font-weight: bold;
+    color: #800000;
+}
+
+.toclist {
+    width: 350px;
+    list-style-type: none;
+    background-color: #ddd;
+    border-style: ridge;
+    border-color: #888;
+    border-width: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.collapsablegrip {
+    color: #bc4800;
+    font-size: x-small;
+    border-bottom-style: solid;
+    border-bottom-color: #bc4800;
+    border-bottom-width: 2px;
+    cursor: pointer;
+}
+.shortdesc {
+    display: list-item;
+    padding: 0px;
+    margin: 0px;
+}
+.collapsed {
+    display:none;
+}
+.expanded {
+    display:inline;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+ul {
+    list-style-position: inside;
+}
+
+img {
+    border-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+    font-size: 20pt;
+    border-style: solid;
+    border-width: 2px;
+    border-color: red;
+    padding: 4px;
+}
+
+.validator {
+    float:right;
+    width: 88px;
+}
+.validator img {
+    border: 0;
+    width: 88px;
+    height: 31px;
+}
+
+.littlelink {
+    font-weight: bold;
+    font-size: x-small;
+}
+
+.code {
+    font-size: 10pt;
+    width:600px;
+    border-style: dotted;
+    border-width: 1px;
+    border-color: black;
+    background-color: #ddd;
+    color: #00a;
+    font-style: normal;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.svgcode {
+    font-size: 10pt;
+    margin-left: 100px;
+    width:600px;
+    border-style: dotted;
+    border-width: 1px;
+    border-color: black;
+    background-color: #ddd;
+    color: #00a;
+    font-style: normal;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.comment {
+    color: #0a0;
+    font-style: italic;
+}
+
+.articletable {
+    border-style: ridge;
+    border-width: 2px;
+}
+
+.articletable th {
+    font-weight: bold;
+    background-color: #800000;
+    color: #f0dc30;
+    border-style: ridge;
+    border-width: 2px;
+}
+.articletable td {
+    border-style: ridge;
+    border-width: 2px;
+}
+
+.plain {
+    background-color: #fff;
+}
+.highlight {
+    background-color: #ffc;
+}
+
+.newslist li {
+    margin-top: 4px;
+    padding-top: 4px;
+}

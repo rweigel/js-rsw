@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link type="text/css" href="js/jquery/theme/ui.all.css" rel="Stylesheet" />
+<script type="text/javascript" src="js/jquery/jquery-1.3.1.js"></script>
+<script type="text/javascript" src="js/jquery/jquery-ui-personalized-1.6rc6.js"></script>
+  <style type="text/css">
+    #x-dialog { background: black; }
+  </style>
+  <script type="text/javascript">
+  $(document).ready(function(){
+  $("#x-dialog").dialog({height:460,width:730,position:'center',resizeStop: function(event,ui) { setWidth();} });
+  });
+  function setWidth() {
+  neww = (document.getElementById('x-dialog').style.width);
+  document.getElementById('applet1').width=neww;
+  newh = (document.getElementById('x-dialog').style.height);
+  document.getElementById('applet1').height=newh;
+}
+  </script>
+</head>
+<body>
+<param name="dataSetURL" value="tsds.http://timeseries.org/get.cgi?StartDate=19950101&EndDate=20080831&ext=bin&out=tsml&ppd=1440&param1=OMNI_OMNIHR-1-v0" >
+
+<div id="x-dialog" title="Interactive Autoplot">
+<applet width="700" height="400" id="applet1" code="org.virbo.autoplot.AutoplotApplet2" archive="AutoplotAppletAll.jar">
+                <param NAME="java_arguments" VALUE="-Djnlp.packEnabled=true"/>
+                <param name="dataSetURL" value="proton_density.qds" >
+                <param name="image" value="loading.gif">
+		<param name="column" value="5em,100%-5em">
+                <param name="font" value="sans-14">
+                <param name="row" value="3em,100%-3em">
+                <param name="renderType" value="fill_to_zero">
+                <param name="color" value="#0000ff">
+                <param name="fillColor" value="#000000">
+                <param name="foregroundColor" value="#000000">
+                <param name="backgroundColor" value="#ffffff">
+                <param name="plot.title" value="Loading data ..." >
+</applet>
+</div> 
+
+</body>
+</html>

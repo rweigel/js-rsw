@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><title>Pretty Web Statistics in SVG</title>
+
+
+
+    
+    <link rel="stylesheet" type="text/css" href="displayWebStats_files/codedread.css">
+    <style type="text/css">
+        p {
+            font-size: 12pt;
+        }
+    </style></head><body>
+<h1>Displaying Web Statistics in an SVG Web Application</h1>
+<h2>By <a href="http://blog.codedread.com/" title="Jeff Schiller's Blog">Jeff Schiller</a></h2>
+<div style="padding-top: 0px; margin-top: 0px; width: 890px;">
+
+<p>These are some web statistics for my site that I've wrapped into a <a href="http://www.w3.org/Graphics/SVG/" title="Scalable Vector Graphics">Scalable Vector Graphics</a>
+application. SVG has recently been implemented in browsers such as
+Firefox 1.5 and the upcoming Opera 9. For other browsers you can use
+the <a href="http://www.adobe.com/svg/viewer/install/main.html" title="Adobe SVG Viewer">Adobe SVG Viewer</a>
+plugin. On my system, performance is best with Internet Explorer +
+Adobe SVG Viewer, pretty dismal in Firefox 1.5 and only marginally
+better on Opera 9.</p>
+
+<div style="width: 120px; float: right;">
+    <script type="text/javascript"><!--
+    google_ad_client = "pub-7209359610668764";
+    google_ad_width = 120;
+    google_ad_height = 240;
+    google_ad_format = "120x240_as";
+    google_ad_type = "text_image";
+    google_ad_channel ="";
+    google_color_border = "ffffff";
+    google_color_bg = "ffffff";
+    google_color_link = "bc4800";
+    google_color_url = "800000";
+    google_color_text = "f0dc30";
+    //--></script>
+    <script type="text/javascript" src="displayWebStats_files/show_ads.js">
+    </script><iframe name="google_ads_frame" src="displayWebStats_files/ads.htm" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" frameborder="0" height="240" scrolling="no" width="120"></iframe>
+            
+    <script type="text/javascript"><!--
+    google_ad_client = "pub-7209359610668764";
+    google_ad_width = 120;
+    google_ad_height = 90;
+    google_ad_format = "120x90_0ads_al_s";
+    google_ad_channel ="";
+    google_color_border = "ffffff";
+    google_color_bg = "ffffff";
+    google_color_link = "bc4800";
+    google_color_url = "800000";
+    google_color_text = "f0dc30";
+    //--></script>
+    <script type="text/javascript" src="displayWebStats_files/show_ads.js">
+    </script><iframe name="google_ads_frame" src="displayWebStats_files/ads_002.htm" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" frameborder="0" height="90" scrolling="no" width="120"></iframe>
+    
+</div>
+
+<div style="border: 1px solid black; width: 720px;">
+<!--[if IE]><script type='text/javascript'>try{new ActiveXObject('Adobe.SVGCtl');document.write('<embed id="stats" width="720" height="366" src="displayWebStats.svg" class="svgex" />');}catch(e){document.write('<p style="color:red">Sorry, you do not have a web browser capable of displaying SVG.  I recommend downloading <a href="http://www.mozilla.com/firefox/">Firefox 1.5</a> or the <a href="http://www.adobe.com/svg/viewer/install/main.html">Adobe SVG Viewer</a> for Internet Explorer.</p>');}</script><noscript><p style="color:red">Sorry, you do not have a web browser capable of displaying SVG.  I recommend downloading <a href="http://www.mozilla.com/firefox/">Firefox 1.5</a> or the <a href="http://www.adobe.com/svg/viewer/install/main.html">Adobe SVG Viewer</a> for Internet Explorer.</p></noscript><![endif]--><!--[if !IE]--><object id="stats" type="image/svg+xml" data="displayWebStats_files/displayWebStats.svg" height="366" width="720"><p style="color: red;">Sorry, you do not have a web browser capable of displaying SVG.  I recommend downloading <a href="http://www.mozilla.com/firefox/">Firefox 1.5</a> or the <a href="http://www.adobe.com/svg/viewer/install/main.html">Adobe SVG Viewer</a> for Internet Explorer.</p></object><!--[endif]-->
+</div>
+
+<p>Where possible, I've tried to make things interactive, so play
+around with it. Drag the red and green "grippies" at the bottom to
+change the scale of the graph. Drag the blue scrollbar to change the
+position. Drag the "glass" legend around. You can move the horizontal
+cursor by dragging it or using the left/right arrow keys (Firefox and
+Opera only). I know that I should have spent some time making this
+fully accessible via the keyboard, sorry about that. If someone wants
+to send me updated code for that you'll get a credit and link here.</p>
+
+<p>The full history of this thing began when I came across <a href="http://ecmanaut.blogspot.com/2006/01/prediction-about-svg-canvas.html">Johan Sundstrom's post</a> about <a href="http://www.rad-e8.com/log/archives/2005/09/12/02.50/">Scott's aesthetically pleasing web stats graphs</a>.  I took the challenge and <a href="http://blog.codedread.com/archives/2006/01/12/pretty-web-statistics-in-svg/">made my first pass</a> at it (original version is now visible <a href="http://www.codedread.com/displayWebStats-old.php">here</a>).
+Johan took my code and made considerable improvements that more closely
+matched Scott's original designs and posted about it <a href="http://ecmanaut.blogspot.com/2006/01/svg-challenge-taken.html">here</a>.  Next I took Johan's code and added more interactivity and capped it off with some suggestions for improvement from <a href="http://rr.latenightpc.com/wp/">Rob Russell</a>, <a href="http://jwatt.org/">Jonathan Watt</a>, and <a href="http://ecmanaut.blogspot.com/">Johan</a>.
+The idea for the dynamic scrollbar was Rob's - it works so beautifully
+in ASV (not so smooth in other native browser implementations - yet).</p>
+
+<p>I also changed the statistic from "# of Page Views" to "# of Unique
+Visits" (based on IP). I've got Operating System data also, but I
+haven't found the time to properly integrate that into the graph (maybe
+I need to make "tabs" to switch between the two statistics?</p>
+</div>
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-7209359610668764";
+google_ad_width = 728;
+google_ad_height = 90;
+google_ad_format = "728x90_as";
+google_ad_channel ="";
+google_color_border = "ffffff";
+google_color_bg = "ffffff";
+google_color_link = "bc4800";
+google_color_url = "800000";
+google_color_text = "f0dc30";
+//--></script>
+<script type="text/javascript" src="displayWebStats_files/show_ads.js">
+</script><iframe name="google_ads_frame" src="displayWebStats_files/ads_003.htm" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" frameborder="0" height="90" scrolling="no" width="728"></iframe>
+
+</body></html>

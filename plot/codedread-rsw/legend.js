@@ -1,0 +1,4 @@
+
+function draggingLegend() {
+    bDraggingLegend = true;
+}

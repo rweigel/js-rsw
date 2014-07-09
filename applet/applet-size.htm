@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title></title>
+    <script type="text/javascript">
+      function setWidth(id) {
+      document.getElementById(id).height="600px";
+      document.getElementById(id).width ="600px"; 
+      }
+    </script>
+  </head>
+
+<body>
+
+Must navigate away from page to close pop-up.  Note that setWeidth
+button only changes the size of the applet space on the page, not the
+pop-up frames.  When the div is changed to a span, the border is partially blocked.  Changing the div width and height reveals other problems.
+<p>
+<input type="button" value="Set applet width 600x600" onClick="setWidth('applet');">
+<br>
+<div style="border:black 1px solid">
+<applet id="applet" width="300" height="300" border="0" codebase="./lib" code="TestApplet.class"
+</div>
+</applet>
+
+</body>
+</html>

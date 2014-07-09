@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"	"http://www.w3.org/TR/html4/loose.dtd"><html>
+<head>
+<title>Hotspot Demo</title>
+
+<script type="text/javascript" src="jqueryGraphics/jquery.js">
+</script>
+<script type="text/javascript" src="jqueryGraphics/jquery.svg.js">
+</script>
+<script type="text/javascript" src="jqueryGraphics/jquery.drawinglibrary.js">
+</script>
+
+<script type="text/javascript">
+// var BASEPATH = "file:///home/weigel/svn/js/";
+// var BASEPATH = "file:///C:/Documents and Settings/Bob/My Documents/code/js/";
+ var BASEPATH = "http://aurora.gmu.edu/tmp/js/";
+</script>
+<script type="text/javascript" src="../../dir/include.js"></script>
+
+<link rel="stylesheet" type="text/css" href="hotspot.css">
+<script type="text/javascript" src="hotspot-params.js"></script>
+<script type="text/javascript" src="hotspot.js"></script>
+
+<link rel="stylesheet" type="text/css" href="tooltip.css">
+<script type="text/javascript" src="tooltip-params.js"></script>
+<script type="text/javascript" src="tooltip.js"></script>
+<script type="text/javascript" src="preload.js"></script>
+
+<script>
+  $(document).ready( function(){ hotspot("hotspot.png"); inittip(MESSAGES); } );
+</script>
+
+</head>
+
+<body>
+
+<div id="canvas" class="canvas">
+  
+  <img id="base"   class="base"   src="hotspot.png">
+  <img id="transp" class="transp" src="hotspot.png" usemap="#Map" />
+
+</div>
+
+<map name="map" id="map"></map>
+
+<div id="hidden_div"></div>
+<div id="tooltipdiv" class="tooltip"></div>
+<script type='text/javascript'> </script> <!-- FF 3.0.5 bug fix http://www.dojotoolkit.org/forum/dojo-foundation/general-discussion/firefox-3-fires-domcontentloaded-event-prematurely -->
+</body>
+
+</html>

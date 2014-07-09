@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+            "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>My Slide Show<title>
+</head>
+<body>
+
+
+<br>
+<a href="index.htm"
+  onclick="window.open('index.htm', null, 'fullscreen=yes, width='
+  + (screen.availWidth-100) + ',height=' + (screen.availHeight-100));
+  return false">Full-screen</a>
+<a href="#" onclick="window.close();">Close this window</a>
+<br>
+
+<applet code="JustSlides.class"
+        archive="JustSlides.jar"
+        width="200" height="300">
+<param name="autoadvance" value="yes">
+<param name="time" value="5">
+<param name="dir" value="slides">
+<param name="1" value="pic1.jpg,Caption of first picture">
+<param name="2" value="pic2.jpg,Caption of second picture">
+<param name="3" value="pic3.jpg,Caption of third picture">
+</applet>
+
+</body>
+</html>

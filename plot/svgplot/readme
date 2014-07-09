@@ -1,0 +1,131 @@
+
+Original write-up:
+---
+
+Demo app for SVG Terminal.
+
+The app creates all the SVG for this view,
+and handles all mouse and keyboard input.
+The SVG Terminal module applies updates from
+the app to the DOM, and hands user input to the app.
+
+---
+
+Write-up as I am interested in:
+
+---
+Demo app for SVG Terminal.
+
+The app creates all the SVG for this view and handles all mouseup/down
+and keyup/down events.  Mousemove events are handled by the app.  The
+SVG Terminal module sends changes from the app to the DOM, and hands
+information about elements in the DOM to the app.  The app
+communicates with SVG Terminal via three functions: SVGStatus, SVGset,
+and SVGget.  (As I understand it, your "app" is currently in C++ and
+is in the same file as the code for SVG Terminal.  Your C++ app
+communicates with SVG Terminal with functions that are like SVGset/get
+and SVGStatus.  
+---
+
+Write-up for app = Octave:
+
+---
+Demo Octave app for SVG Terminal
+
+Octave communicates with SVG Terminal via three script functions:
+svgstatus.m, svgget.m, svgset.m.  These scripts call the dynamically
+linked .oct files.  svgstatus_oct.oct, svgget_oct.oct, svgset_oct.oct.
+The .oct files make calls to SVG Terminal via SVGStatus, SVGset, and
+SVGget.
+
+Octave passes a structure to SVGset which translates it into a SVG
+string and passes the string to the SVG Terminal which passes the
+string to the document,
+
+Octave passes SVGget an id.  SVGget requests information about this
+element in the document via SVG Terminal.  SVG Terminal returns the
+SVG string of this element to SVGget which then transforms this string
+to a structure and returns the structure to Octave.
+
+Octave *does not* handle mouse movement.  Octave is only passed
+information from SVG Terminal following mouseup/down and keyup/down
+events.  Changes that take place to the document during mouse
+movements are handled using JavaScript.
+
+To compile, execute "make" in this directory.  
+
+To start the svg server, type "./svg-terminal start" on the command
+line.  A Firefox window will appear.
+
+To run the demo, start Octave and then execute splot_demo at the
+command line.  
+---
+
+Given these write-ups, I need 3 functions put into svgterm-server.cc:
+
+(1) SVGStatus: returns 0 if browser is closed and 1 otherwise
+
+(2) SVGset( &s ) where s = sFigure, sData, or sZoom.
+
+Given the information in the structure "sFigure", create a SVG string and
+insert it into the document:
+
+  sFigure.Type = "root";
+  sFigure.Id = "Figure1";	
+  sFigure.Visible = 1;     // Same meaning as SVG attribute
+  sFigure.Color[0] = 0;    // RGB 0-255
+  sFigure.Color[1] = 255;
+  sFigure.Color[2] = 0;
+  sFigure.Opacity = 0.5; // Same meaning as SVG opacity
+  sFigure.Box[0] = 0;    // upper left x 
+  sFigure.Box[1] = 0;    // upper left y 
+  sFigure.Box[2] = 100;  // lower right x
+  sFigure.Box[3] = 100;  // lower right y
+  sFigure.CurrentPoint[0] = 0; // Cursor position
+  sFigure.CurrentPoint[1] = 0; // Cursor position
+  sFigure.CurrentPoint[2] = 0; // Cursor position
+
+Given the information in the structure "sData", create a SVG string and
+insert it into the document:
+
+  sData.Type = "data";
+  sData.Id = "Data1";	
+  sData.Symbol = "circle";	
+  sData.Visible = 1;     
+  sData.Color[0] = 0;    
+  sData.Color[1] = 255;
+  sData.Color[2] = 0;
+  sData.Opacity = 0.5; 
+  sData.x = x positions array
+  sData.y = y positions array
+
+Given the information in the structure "sZoom", create a SVG string and
+insert it into the document:
+
+  sZoom.Type = "zoom";
+  sData.Id = "Zoom1";	
+  sZoom.Color[0] = 127;
+  sZoom.Color[1] = 127;
+  sZoom.Color[2] = 127;
+  sZoom.Box[0] = 0; // MouseDown x
+  sZoom.Box[1] = 0; // MouseDown y
+  sZoom.Box[2] = 0; // MouseUp x
+  sZoom.Box[3] = 0; // MouseUp y
+  sZoom.Opacity = 0.1; 
+
+(3) SVGget( &s ), where s = sFigure, sData, or sZoom. 
+
+I also suggest that your demo app code is put in a different file than
+the SVGTerminal code and is modified to use SVGget/set and SVGstatus.
+Note that SVGset/get will be generalized after we get a working
+prototype.  
+
+I think that at this stage it is best to get the prototype working
+that I can compile and tinker with on a Linux machine.  After
+announcement to the octave-graphics email list, the second part of the
+project will be generalization of SVGget/set based on discussion on
+this list (they are in the process of writing up how plotting packages
+should be handled by Octave; this is why I don't want to generalize
+too quickly).  After generalization, we will announce splot-0.1 to the
+Octave user list.  The third part of the project will involve dealing
+with feedback that (hopefully) results from the announcement.

@@ -1,0 +1,73 @@
+Dear Liam,
+
+>> input events. An English spec might be more clear.
+
+See below.
+
+>> It sounds like the only user action you want to handle initially is
+>> drag-to-set-zoom, and presumably un-zoom?
+
+Yes.  And as described below all mouse movements to the DOM will be
+handled by JavaScript.  Previously I thought that the app would do the
+calculations required for transforming elements after the
+drag-to-set-zoom (as is the case for your demo C++ app that does the
+calculations required for drag-to-set-size).  
+
+Now that I have read up on JavaScript/SVG I think that this is more
+naturally handled by JavaScript.  I see no reason for reimplementing
+the many JavaScript functions for modifying SVG attributes in C++,
+unless a loop over many data points is required.  Moreover, if Google
+Maps 2.0 uses SVG (as is rumored), I think most of their zoom
+functions will be written in JavaScript.  I am sure these functions
+will have algorithms that will faster, more useful, and more general
+than algorithms I can do quickly in C++ in a short amount of time.
+
+>> Changing the scale is easy to do with SVG, however it would inflate
+>> the data point circles proportionatel 'y. Is that OK, or should we
+>> resize the circles down after scaling up?
+
+There will be two ways of zooming.  Data points will have an attribute
+that indicates how they should zoom.  Suppose 1000 circles are drawn
+in a figure box with axes labels of xmin=0, xmax=10, ymin=0, and
+ymax=10.  The user draws a rectangle from [x,y]=[2,2] to [10,3].  The
+figure box is modified so that the upper and lower labels are xmin=2,
+xmax=10, ymin=2, ymax=3.  If the circles that were in the zoom
+rectangle drawn by the user have an attribute "onzoom"=scale, they
+will now appear as ellipses.  If the circles have an attribute of
+"onzoom"=fixed they will be the same size.  You should be able to do
+both types of zoom with a single "transform" attribute change.
+
+>> The app also either must provide a function by which Octave can
+>> insert data points, or call an Octave function to get a data set.
+
+Below I describe SVGset/SVGget and SVGstatus.  I don't think these
+functions should be a part of the Octave functions (the app), because
+I may want to use them from other programs, i.e., Matlab or IDL.  I
+think these functions should be the interface from the app to the SVG
+Terminal.
+
+>> Are there special issues for creating an Octave module,
+>> e.g. functions that must be implemented?
+
+They are in the attached zip file in the directory "m"
+(Octave-interpreted scripts) and "oct" (dynamically loaded functions).
+
+>> How many points do you expect in one of these
+>> plots. Millions is not going to perform well! Hundreds will be OK, I
+>> think. You could use clusters marked by single graphic elements to reduce the
+>> quantity, and a certain zoom level could crack open a
+
+Thousands is a good number.  I think there will be two ways of
+generating a scatterplot.  For many data points we will use "path" and
+all the points will have the same id.  For only a few data points,
+each data point will be represented by a different id.  I suspect that
+the "crack open" can be handled by the SVG renderer by modifying the
+viewbox attribute.  From what I can see, if a viewbox is 3200x2400 on
+a 1600x1200 pixel screen and a circle of size 1 is drawn, it will not
+be visible on the screen until the viewbox is put to ~ 800x600.
+
+The attached README file explains what needs to be done towards the
+bottom.  splot-0.01.zip contains the Octave functions for a demo.
+Below are some write-ups that I hope clarify what I am looking for.
+
+Bob

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link type="text/css" href="theme/ui.all.css" rel="Stylesheet" />	
+<script type="text/javascript" src="jquery-1.3.1.js"></script>
+<script type="text/javascript" src="jquery-ui-personalized-1.6rc6.js"></script>
+  <style type="text/css">
+    #dialog { width: 160px; height: 160px; background: blue; }
+  </style>
+  <script type="text/javascript">
+  $(document).ready(function(){
+  $("#dialog").dialog({ position:'center',resizeStop: function(event,ui) { setWidth();} });
+  setWidth();
+  });
+  function setWidth() {
+  neww = (document.getElementById('dialog').style.width);
+  document.getElementById('applet1').width=neww;
+  newh = (document.getElementById('dialog').style.height);
+  document.getElementById('applet1').height=newh;
+}
+  </script>
+</head>
+<body style="font-size:62.5%;">
+
+<div id="dialog" title="Interactive Autoplot">
+<APPLET id="applet1" CODE="HelloWorld.class" width=1 height=1>
+</APPLET>
+</div> 
+
+</body>
+</html>

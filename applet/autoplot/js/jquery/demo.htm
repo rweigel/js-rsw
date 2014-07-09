@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link type="text/css" href="themes/default/ui.all.css" rel="Stylesheet" />
+<script type="text/javascript" src="jquery-1.3.1.js"></script>
+<script type="text/javascript" src="ui/ui.core.js"></script>
+<script type="text/javascript" src="ui/ui.draggable.js"></script>
+<script type="text/javascript" src="ui/ui.resizable.js"></script>
+<script type="text/javascript" src="ui/ui.dialog.js"></script>
+  <script type="text/javascript">
+  function setWidth() {
+  alert("Here");
+  neww = (document.getElementById('re').style.width);
+  document.getElementById('applet1').width=neww-10;
+  newh = (document.getElementById('re').style.width);
+  document.getElementById('applet1').width=newh-10;
+  }
+  $(document).ready(function(){
+    $("#re").resizable({ stop: function(event,ui) { setWidth(); } });
+  });
+  </script>
+</head>
+<body style="font-size:62.5%;">
+
+<div id="re">
+</div>
+
+
+</body>
+</html>

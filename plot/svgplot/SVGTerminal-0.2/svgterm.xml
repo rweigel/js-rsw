@@ -1,0 +1,374 @@
+<!--
+	SVG Terminal javascript module
+	Copyright 2006 by Liam Breck
+	Licensed under GNU GPL http://gnu.org/licenses/gpl.html
+
+	Home page and protocol spec: http://networkimprov.net/airwrx/awscene.html
+
+	Firefox 1.5 implementation of SVG Terminal protocol SVGT/0.2 (rev a)
+
+	Known bugs
+	dragging the mouse out of the window ceases event capture; mouseup will not be seen
+	text element with a final empty tspan yields wrong size from getBBox()
+
+	28 Feb 2006 - text highlighting
+				  looks odd due to use of getBBox to create path
+				  should we hack Firefox to use text bg?
+	21 Feb 2006 - first release
+-->
+
+<xhtml xmlns="http://www.w3.org/1999/xhtml">
+
+<script><![CDATA[
+
+var inp = {
+	eBUTTONDOWN:0, eBUTTONUP:1, eMOUSEMOVE:2, eRESIZE:3, // mouse-type
+	eKEYDOWN:4, eKEYUP:5 // key-type
+}
+
+netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect")
+sSound = Components
+	.classes["@mozilla.org/sound;1"]
+	.createInstance(Components.interfaces.nsISound)
+
+function sendEvent(iType, iEvt)
+{
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+	if (!sTransport.isAlive())
+		return true
+    var aMsg = "SVGT/0.2 inp " + iType + " "
+	if (iType == inp.eKEYDOWN || iType == inp.eKEYUP)
+		aMsg += iEvt.keyCode
+	else {
+		var aTarget = ""
+		if (iEvt.target.nodeType == Node.ELEMENT_NODE)
+			aTarget += iEvt.target.getAttribute("id")
+		aMsg += iEvt.clientX + "," + iEvt.clientY + " " + (aTarget.length ? aTarget : "0")
+	}
+	aMsg += "\r\n"
+	sOutstream.write(aMsg, aMsg.length)
+	sOutstream.flush()
+	//iEvt.returnValue = false
+	//iEvt.cancelBubble = true
+	return false
+}
+
+function TextNodeUpdate(iUpdt)
+{
+	var aCurr = document.getElementById(iUpdt.getAttribute("id"))
+	if (aCurr.firstChild == null)
+		aCurr.appendChild(document.createTextNode(""))
+	else if (aCurr.firstChild.nodeType != Node.TEXT_NODE)
+		return
+	var aTextobj = iUpdt.firstChild
+	var aOffset = iUpdt.getAttribute("offset")
+	if (aOffset == null || aOffset == "")
+		aOffset = 0
+	else if (aOffset == "end") {
+		if (aTextobj != null)
+			aCurr.firstChild.appendData(aTextobj.data)
+		return
+	}
+	var aReplace = iUpdt.getAttribute("replace")
+	if (aReplace == null || aReplace == "")
+		aReplace = 0
+	if (aTextobj == null || aTextobj.data == null)
+		aCurr.firstChild.deleteData(aOffset, aReplace)
+	else
+		aCurr.firstChild.replaceData(aOffset, aReplace, aTextobj.data)
+}
+
+function TextSelectUpdate(iUpdt)
+{
+	var aCurr = document.getElementById(iUpdt.getAttribute("id"))
+	if (aCurr.getAttribute("tag") != "text") {
+		throw("text select identified non-selectable object: " + aCurr.getAttribute("id"))
+		return
+	}
+
+	var aHl = document.getElementById(iUpdt.getAttribute("hlid"))
+	if (aHl == null) {
+		aHl = document.createElementNS("http://www.w3.org/2000/svg", "path")
+		aHl.setAttribute("id", iUpdt.getAttribute("hlid"))
+		aHl.setAttribute("fill", "yellow")
+		aCurr.insertBefore(aHl, aCurr.firstChild)
+	}
+	if (aCurr.childNodes.length == 1) {
+		aHl.setAttribute("d", "")
+		return
+	}
+	var aTsize = document.createElementNS("http://www.w3.org/2000/svg", "text")
+	var aTdata = document.createTextNode("")
+	aTsize.appendChild(aTdata)
+	aCurr.insertBefore(aTsize, aCurr.firstChild)
+
+	var aCoord = iUpdt.getAttribute("select").split(' ')
+	var aNx = aCoord[0]*1
+	var aNy = aCoord[1]*1
+	var aSx = aCoord[2]*1
+	var aSy = aCoord[3]*1
+	if (aSy < aNy) {
+		aNy = aSy
+		aNx = aSx
+		aSy = aCoord[1]*1
+		aSx = aCoord[0]*1
+	}
+	var aLine = 2
+	var aEdge = aCurr.childNodes[aLine].getBBox()
+	if (aNy < aEdge.y) {
+		aNy = aEdge.y
+		aNx = aEdge.x
+	}
+	if (aNx < aEdge.x)
+		aNx = aEdge.x
+	if (aSx < aEdge.x)
+		aSx = aEdge.x
+
+	var aPath = ""
+	var aLbox = null
+	var aSbox
+	var aCx, aCw
+	for (var aPt = 0; aPt < 2; ++aPt) {
+		var aX = aPt ? aSx : aNx
+		var aY = aPt ? aSy : aNy
+		for ( ; aLine < aCurr.childNodes.length; ++aLine) {
+			aLbox = aCurr.childNodes[aLine].getBBox()
+			if (aLbox.y+aLbox.height > aY)
+				break;
+			if (aPt)
+				aPath += " L" + (aLbox.x+aLbox.width) + " " + (aLbox.y)
+					  +  " L" + (aLbox.x+aLbox.width) + " " + (aLbox.y+aLbox.height)
+		}
+		aCx = aLbox.x
+		aCw = aLbox.width
+		if (aLine < aCurr.childNodes.length) {
+			//. workaround for lack of getCharNumAtPosition()
+			aTsize.setAttribute("x", aCurr.childNodes[aLine].getAttribute("x"))
+			aTsize.setAttribute("y", aCurr.childNodes[aLine].getAttribute("y"))
+			for (var aC = 0; aC < aCurr.childNodes[aLine].firstChild.length; ++aC) {
+				aTdata.appendData(aCurr.childNodes[aLine].firstChild.data[aC])
+				aCw = aTsize.getComputedTextLength() - (aCx-aLbox.x)
+				aCx += aCw
+				if (aCx > aX)
+					break
+			}
+			aCx -= aCw
+			aTdata.deleteData(0, aTsize.firstChild.length)
+		}
+		if (aPt == 0) {
+			aSbox = aLbox
+			aSbox.x = aCx
+			aSbox.width = aCw
+			aPath = "M" + aSbox.x   + " " + aSbox.y
+		}
+	}
+	if (aLine < aCurr.childNodes.length) {
+		if (aLbox.y == aSbox.y && aSbox.x > aCx) {
+			var aTmp = aSbox.x
+			aSbox.x = aCx
+			aCx = aTmp
+			aTmp = aSbox.width
+			aSbox.width = aCw
+			aCw = aTmp
+			aPath =   "M" + aSbox.x   + " " + aSbox.y
+		}
+		aPath += " L" + (aCx+aCw) + " " + aLbox.y
+			  +  " L" + (aCx+aCw) + " " + (aLbox.y+aLbox.height)
+	}
+	if (aLbox.y > aSbox.y)
+		aPath += " L" + aEdge.x   + " " + (aLbox.y+aLbox.height)
+			  +  " L" + aEdge.x   + " " + (aSbox.y+aSbox.height)
+
+	aPath +=     " L" + aSbox.x   + " " + (aSbox.y+aSbox.height)
+		  +      " Z"
+	aHl.setAttribute("d", aPath)
+	aCurr.removeChild(aTsize)
+}
+
+function ElementUpdate(iUpdt)
+{
+	var aCurr = document.getElementById(iUpdt.getAttribute("id"))
+	var aNewPrevId = iUpdt.getAttribute("prev")
+	var aPrev = document.getElementById(aNewPrevId)
+	if (aCurr != null) {
+		if (iUpdt.hasAttribute("atupdate")) {
+			var aAtlist = iUpdt.attributes
+			for (var aAt = 0; aAt < aAtlist.length; ++aAt) {
+				if (aAtlist[aAt].nodeName == "atupdate")
+					continue;
+				aCurr.setAttribute(aAtlist[aAt].nodeName, aAtlist[aAt].nodeValue)
+			}
+		} else if (aNewPrevId != aCurr.getAttribute("prev")) {
+			aCurr.parentNode.removeChild(aCurr)
+			aCurr = null
+		} else
+			aCurr = aCurr.parentNode.replaceChild(iUpdt, aCurr)
+	} else
+		if (iUpdt.hasAttribute("xy") && aPrev) {
+			//. need to get the font height here
+			iUpdt.setAttribute("x", aPrev.getAttribute("x"))
+			iUpdt.setAttribute("y", aPrev.getAttribute("y")*1+16)
+		}
+	if (aCurr == null) {
+		var aParent = aPrev == null
+			? document.getElementById(iUpdt.getAttribute("parent"))
+			: aPrev.parentNode
+		var aSibling = aPrev == null ? aParent.firstChild : aPrev.nextSibling
+		if (aSibling == null)
+			aCurr = aParent.appendChild(iUpdt)
+		else {
+			aCurr = aParent.insertBefore(iUpdt, aPrev.nextSibling)
+			aPrev.nextSibling.setAttribute("prev", aCurr.getAttribute("id"))
+		}
+	}
+
+	var aSizeto = aCurr.getAttribute("sizeto")
+	if (aSizeto != "" && aCurr.tagName == "rect") {
+		aSizeto = document.getElementById(aSizeto)
+		if (aSizeto != null && aSizeto.getBBox) {
+			aSizeto = aSizeto.getBBox()
+			// FF1.5 bug - empty tspan in text yields bad getBBox result: x=0,y=0
+			if (aSizeto != null && (aSizeto.x != 0 || aSizeto.y != 0)) {
+				aCurr.setAttribute("x", aSizeto.x)
+				aCurr.setAttribute("y", aSizeto.y)
+				var aOrigW = aCurr.getAttribute("width")*1
+				var aOrigH = aCurr.getAttribute("height")*1
+				if (aOrigW < aSizeto.width)  aCurr.setAttribute("width",  aSizeto.width)
+				if (aOrigH < aSizeto.height) aCurr.setAttribute("height", aSizeto.height)
+			}
+		}
+	}
+}
+
+var sTransport
+var sOutstream
+var sInstream
+var sParser = new DOMParser()
+var sXout = new XMLSerializer()
+var sBuf = ""
+var sLen = 0
+var sLenHead = 0
+
+dataListener = {
+	onStartRequest: function(iRequest, iContext) {},
+
+	onStopRequest: function(iRequest, iContext, iStatus) {
+		netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect")
+		sOutstream.close()
+		sInstream.close()
+	},
+
+	onDataAvailable: function(iRequest, iContext, iStream, iOffset, iCount) {
+		netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect")
+		sBuf += sInstream.read(iCount)
+		do {
+			if (sLen == 0) {
+				for (sLenHead = 0; sLenHead < sBuf.length && sBuf[sLenHead] != '\r'; ++sLenHead) ;
+				if (sLenHead < sBuf.length) {
+					sLen = sBuf.substr(0,sLenHead).split(' ')[2]*1
+					sLenHead += 2
+				}
+			}
+			if (sBuf.length < sLen+sLenHead)
+				return
+			var aData = sParser.parseFromString(sBuf.substr(sLenHead,sLen), "text/xml")
+			//alert(sBuf.substr(0,sLenHead+sLen))
+			sBuf = sBuf.substr(sLen+sLenHead)
+			sLen = 0
+
+			var aUpdt = aData.documentElement.childNodes
+			for (var a = 0; a < aUpdt.length; ++a) {
+				if (aUpdt[a].nodeType != Node.ELEMENT_NODE)
+					continue
+
+				if (aUpdt[a].tagName == "text" && aUpdt[a].hasAttribute("offset"))
+					TextNodeUpdate(aUpdt[a])
+				else if (aUpdt[a].tagName == "text" && aUpdt[a].hasAttribute("select"))
+					TextSelectUpdate(aUpdt[a])
+				else
+					ElementUpdate(aUpdt[a])
+			}
+			//alert(sXout.serializeToString(document.getElementById("0")))
+		} while (sBuf.length > 0)
+	}
+}
+
+function hostConnect()
+{
+	var aParams = window.location.search.split('&')
+	var aHost = aParams.length == 2 ? aParams[0].split('=')[1] : "localhost"
+	var aPort = aParams.length == 2 ? aParams[1].split('=')[1] : "8989"
+	var aInfo = document.getElementById("hostport")
+	if (aInfo)
+		aInfo.firstChild.replaceData(0, aInfo.firstChild.length, aHost+':'+aPort)
+
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect")
+	var aTransportService = Components
+		.classes["@mozilla.org/network/socket-transport-service;1"]
+		.getService(Components.interfaces.nsISocketTransportService)
+	sTransport = aTransportService.createTransport(null, 0, aHost, aPort*1, null)
+	sOutstream = sTransport.openOutputStream(0,0,0)
+	var aInstream = sTransport.openInputStream(0,0,0)
+	sInstream = Components
+		.classes["@mozilla.org/scriptableinputstream;1"]
+		.createInstance(Components.interfaces.nsIScriptableInputStream)
+	sInstream.init(aInstream)
+	var aPump = Components
+		.classes["@mozilla.org/network/input-stream-pump;1"]
+		.createInstance(Components.interfaces.nsIInputStreamPump)
+	aPump.init(aInstream, -1, -1, 0, 0, false)
+	aPump.asyncRead(dataListener, null)
+
+	var aMsg = "SVGT/0.2 inp hello\r\n"
+	sOutstream.write(aMsg, aMsg.length)
+	sOutstream.flush()
+}
+
+function hostDisconnect()
+{
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect")
+	sOutstream.close()
+}
+
+]]></script>
+
+<head><title>SVG Terminal for Mozilla Firefox 1.5</title></head>
+
+<style type="text/css">
+	body { margin-left:0; margin-right:0; margin-top:0; margin-bottom:0; }
+</style>
+
+<body
+	onload    = "hostConnect()"
+	onunload  = "hostDisconnect()"
+	onkeydown = "return sendEvent(inp.eKEYDOWN,    event)"
+	onkeyup   = "return sendEvent(inp.eKEYUP,      event)"
+	onresize  = "return sendEvent(inp.eRESIZE,     event)"
+	>
+
+<svg width="100%" height="100%" version="1.1"
+	xmlns="http://www.w3.org/2000/svg"
+	onmouseup   = "return sendEvent(inp.eBUTTONUP,   evt)"
+	onmousedown = "return sendEvent(inp.eBUTTONDOWN, evt)"
+	onmousemove = "return sendEvent(inp.eMOUSEMOVE,  evt)"
+	>
+
+	<g id="0" prev="-1">
+		<text x="100" y="100">Could not reach svgt://<tspan id="hostport">host</tspan>.
+		<tspan x="100" dy="20">Start svgtermdemo.exe and reload this page,
+			or scroll down to set connection parameters.</tspan>
+		</text>
+	</g>
+
+</svg>
+
+<div align="right">
+<form method="get" action="svgterm.xml" style="height:30px; background-color:#dddddd;">
+Connection Parameters:
+<input type="text" name="h" value="localhost" size="15"/>
+<input type="text" name="p" value="8989" size="5"/>
+<input type="submit" value="Try Host"/> &#160; &#160;
+</form></div>
+
+</body>
+</xhtml>

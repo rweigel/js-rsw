@@ -1,0 +1,8 @@
+
+
+To get working:
+* tar zxvf justslides-1.0.0.tar.gz
+* cd java
+* javac JustSlides
+* wget http://ian.goldby.net/script/JustSlides.jar
+* Created index.htm based on text at From http://ian.goldby.net/justslides/index.html

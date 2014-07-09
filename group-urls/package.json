@@ -1,0 +1,14 @@
+{
+  "name": "autogroup",
+  "description": "",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "jsdom": "*",
+    "request": "*",
+    "async": "*",
+    "xml2js": "*",
+    "xmlbuilder": "*",
+    "express": "*"
+  }
+}

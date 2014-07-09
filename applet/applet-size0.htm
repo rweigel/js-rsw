@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title></title>
+    <script type="text/javascript">
+      function setWidth(id) {
+      document.getElementById(id).height="600px";
+      document.getElementById(id).width ="600px"; 
+      }
+      function setWidth2(id) {
+      document.getElementById(id).style.height="200px";
+      document.getElementById(id).style.width ="200px"; 
+      }
+      function setWidth3(id) {
+      document.getElementById(id).style.height="400px";
+      document.getElementById(id).style.width ="400px"; 
+      }
+    </script>
+
+  </head>
+
+<body>
+
+Conclusion: It is better to set applet to 100% and adjust size of div.
+Otherwise you need to toggle div size to match applet size when you
+change applet size.  In this example, the applet width cannot be
+changed after the div width id changed from its starting default value
+(unspecified width and height with applet set at 100%, 100%).
+<p>
+
+<input type="button" value="Set applet width 600x600" onClick="setWidth('applet0');">
+<input type="button" value="Set div width 200x200" onClick="setWidth2('applet0div');">
+<input type="button" value="Set div width 400x400" onClick="setWidth3('applet0div');">
+
+<div id="applet0div">
+<applet id="applet0"
+	width="100%"
+	height="100%"
+	codebase="./lib"
+	code="TestApplet0.class"
+/>
+</div>
+
+</body>
+</html>
