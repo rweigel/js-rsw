@@ -1,14 +1,10 @@
-auto_group_urls
-===============
+Automatically group a set of URLs with key/values
 
-Automatically group a set of Urls 
+Install & Run
 
-Install & run
-=============
-    npm install && node app.js
+npm install && node app.js
 
 Run tests
-=========
 
-    node test_supermag_with_server.js
+node test_supermag_with_server.js
 
