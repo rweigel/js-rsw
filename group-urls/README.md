@@ -1,10 +1,12 @@
 Automatically group a set of URLs with key/values
 
-Install & Run
+Install & Run Server
 
 npm install && node app.js
 
-Run tests
+Test
 
-node test_supermag_with_server.js
+node group_test.js
+
+node app_tests.js
 
