@@ -7,7 +7,8 @@
     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="js/jstree_pre1.0_stable/jquery.jstree.js"></script>
     <script type="text/javascript" src="js/treeify.js"></script>
-    <script type="text/javascript" src="treeify.json"></script>
+    <script type="text/javascript" src="js/testdata.js"></script>
+    <script type="text/javascript" src="treeify_test.js"></script>
 
     <script>
 
@@ -74,72 +75,28 @@
 			return template;
 		}
 
-		if (0) {
-		var T = new Array();
-		var start = new Date().getTime();
-		console.log("Start placing in array");
-		for (var i = 0;i < data.length;i++) {
-			T[i] = data[i].value.replace("_",".");
-		}		
-		var stop = new Date().getTime();
-		console.log("Finished placing in array "+(stop-start)+" ms");
-                }
-
-	        //
-		var start = new Date().getTime();
-		console.log("Call treeify");
-                d1 = ["cri.AAT3","cri.AATB","cri_c.AAT3","cri_c.AAT3.minute","cri_c.AATB.minute"];
-		D1 = treeify(d1,0);
-		var stop = new Date().getTime();
-		console.log("Finished treeify in "+(stop-start)+" ms");
-		console.log("Treeify result for : "+d1);
-		console.log(D1)
-
-		var start = new Date().getTime();
-		console.log("Call createlevel()");
-		var data1 = createlevel(D1);
-		console.log("createlevel() result:");
-		console.log(data1);
-		var stop = new Date().getTime();
-		console.log("Finished createlevel() in "+(stop-start)+" ms");
-
-		var start = new Date().getTime();
-		console.log("Call treeify");
-                d2 = ["A.B.C","A.B.D","A.Z.Z","D.Z.Z"];
-		D2 = treeify(d2,0);
-		var stop = new Date().getTime();
-		console.log("Finished treeify in "+(stop-start)+" ms");
-		console.log("Treeify result for : "+d2);
-		console.log(D2)
-
-		var start = new Date().getTime();
-		console.log("Call createlevel()");
-		var data2 = createlevel(D2);
-		console.log("createlevel() result:");
-		console.log(data2);
-		var stop = new Date().getTime();
-		console.log("Finished createlevel() in "+(stop-start)+" ms");
-		
 		$(function () {
-			$("#demo1").jstree({ 
-					"json_data": {"data" : data1, "progressive_render": true},
-					"themes": {"theme":"default","dots":true,"icons":false},
-					"plugins": [ "themes", "json_data", "ui" ],
-				})
-			$("#demo1").bind("select_node.jstree", function (e, data) {  data.inst.open_node();console.log(data.inst.get_path());console.log(data.rslt.obj.data("id"))});
 
-			$("#demo2").jstree({ 
-					"json_data": {"data" : data2, "progressive_render": true},
-					"themes": {"theme":"default","dots":true,"icons":false},
-					"plugins": [ "themes", "json_data", "ui" ],
-				})
-			$("#demo2").bind("select_node.jstree", function (e, data) {  data.inst.open_node();console.log(data.inst.get_path());console.log(data.rslt.obj.data("id"))});
-			});		
+			for (var i = 1; i < 6; i++) {
+				var tmp  = runtest(i-1);
+				var DATA = createlevel(tmp);
+				console.log(DATA)
+				$("body").append("<div id='demo"+i+"'/><hr/>");
+				$("#demo"+i).jstree({ 
+						"json_data": {"data" : DATA, "progressive_render": true},
+						"themes": {"theme":"default","dots":true,"icons":false},
+						"plugins": [ "themes", "json_data", "ui" ],
+					});
+				$("#demo"+i).bind("select_node.jstree", function (e, data) {
+					data.inst.open_node();
+					console.log(data.inst.get_path());
+					console.log(data.rslt.obj.data("id"))
+				});
+			}
+
+		});
+
 	</script>
   </head>
   <body>
-    <div id="demo1"></div>
-    <hr/>
-    <div id="demo2"></div>
-  </body>
 </html>

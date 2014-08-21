@@ -1,3 +1,5 @@
+// Weibao Wei
+
 var MAX_ITEMS = 10;
 var HASH_LENGTH = 10;
 var MAX_NUM_TOKENS = 10;
@@ -113,22 +115,3 @@ function merge(node){
 		merge(child);
 	});
 }
-
-function print(node, level){
-	level=level||0;
-	var indent = "";
-	for(var i=0;i<level;i++){
-		indent+="  ";
-	}
-	console.log(indent+node.name);
-	indent+="  ";
-	node.items.forEach(function(item){
-		console.log(indent+item.url);
-	})
-	if(node.children) {
-		node.children.forEach(function(child){
-			print(child, level+1);
-		})
-	}
-}
-exports.print = print;

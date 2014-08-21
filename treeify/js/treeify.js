@@ -1,8 +1,16 @@
+// node.js
+if (typeof(exports) !== "undefined" && require){
+	// Require statements
+}
+
+var	debug = false;
+
 function treeify(names,level,parent) {
+
+	if (typeof("level") === "undefined") level = 0;
 
 	delim = ".";
 	delimre = /\./;
-	debug = true;
 	
 	names.sort();
 	if (!treeify.n) {
@@ -11,7 +19,7 @@ function treeify(names,level,parent) {
 		treeify.n = treeify.n+1;
 	}
 	if (!parent) {
-		console.log("treeify.js: Setting parent to blank")
+		if (debug) console.log("treeify.js: Setting parent to blank")
 		var parent = "";
 	}
 	if (debug) {
@@ -19,7 +27,7 @@ function treeify(names,level,parent) {
 		console.log("treeify.js: Names = ")
 		console.log(names);
 	}
-	console.log("parent: " + parent)
+	if (debug) console.log("parent: " + parent)
 	
 	var cont = 0;
 
@@ -37,17 +45,14 @@ function treeify(names,level,parent) {
 			console.log(names[0]);
 		}
 		if (names[0].match(delimre)) {
-			if (debug)
+			if (debug) {
 				console.log("treeify.js: Names has one element with delimeter");
-			tmpa  = names[0].split(delim);
-			L    = tmpa[0];
-			//D[L] = new Object();
-			D[parent+L] = tmpa[1];
+				console.log(names);
+			}
+			return [names[0]]
 		} else {
-			if (debug)	
-				console.log("treeify.js: Names has one element without delimeter")
+			if (debug) console.log("treeify.js: Names has one element without delimeter")
 			return names;
-			//D[names[0]] = names[0];
 		}
 		return D;
 	}
@@ -60,13 +65,12 @@ function treeify(names,level,parent) {
 		}
 	}
 	if (done) {
-		if (debug)
-			console.log("treeify.js: No delimiters")
+		if (debug) console.log("treeify.js: No delimiters")
 		//console.log(names);
 		return ".";
 	}
 	
-	var ilast=0;
+	var ilast = 0;
 	for (var i = 0;i < names.length;i++) {
 		var tmpa = [];
 
@@ -77,7 +81,7 @@ function treeify(names,level,parent) {
 		if (Lr[i] != "") {
 			cont = 1;
 		}
-		console.log("parent " + i + parent)
+		if (debug) console.log("parent " + i + parent)
 		if (debug) {
 			if (i > 0) {
 				console.log("treeify.js: Current prefix: "+L[i]+"; Last prefix: "+L[i-1]);
@@ -93,8 +97,8 @@ function treeify(names,level,parent) {
 		}
 		
 		if (cont == 0) {
-			console.log('treeify.js: cont=0');
-			console.log('treeify.js: parent='+parent)
+			if (debug) console.log('treeify.js: cont=0');
+			if (debug) console.log('treeify.js: parent='+parent)
 			continue;
 		}
 		if (i == names.length-1 && L[i] == L[i-1]) {
@@ -112,17 +116,17 @@ function treeify(names,level,parent) {
 				console.log('treeify.js: +ilast: '+ilast)
 			}
 			var lt = Lr.slice(ilast,i);
-			console.log("a parent: " + parent);
+			if (debug) console.log("a parent: " + parent);
 			tmp = treeify(lt,level+1,L[i-1]);
-			console.log("b parent: " + parent);
+			if (debug) console.log("b parent: " + parent);
 			if (tmp == ".") {
-				console.log(i);
-				console.log(ilast);
-				console.log(names.slice(ilast,i));
+				if (debug) console.log(i);
+				if (debug) console.log(ilast);
+				if (debug) console.log(names.slice(ilast,i));
 				D["."] = names.slice(ilast,i);
 			} else {
-				console.log("treeify.js: Call treeify with remainder");
-				console.log("treeify.js: Parent: " + parent);
+				if (debug) console.log("treeify.js: Call treeify with remainder");
+				if (debug) console.log("treeify.js: Parent: " + parent);
 				D[L[i-1]] = treeify(lt,level+1,L[i-1]);
 			}
 			if (i == names.length - 1 ) {
@@ -144,3 +148,7 @@ function treeify(names,level,parent) {
 	return D;
 }
 
+// node.js
+if (typeof(exports) !== "undefined" && require){
+	exports.treeify = treeify;
+}
