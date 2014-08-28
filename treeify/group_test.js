@@ -3,8 +3,7 @@ var group   = require("./js/group");
 
 var url = "http://autoplot.org/bookmarks/SuperMAG.xml";
 //var url = "http://viviz.org/gallery/images/autoplot-tests/";
-var url = "http://localhost:8004/?catalog=SSCWeb&return=tsds";
-
+var url = "http://tsds.org/get/?catalog=SSCWeb&return=autoplot-bookmarks";
 
 // Fetch and parse links from URL
 request(url, function (error, response, body) {
@@ -50,7 +49,15 @@ function parseXML(body, callback) {
 	parser.parseString(body, function(err, res) {
 		if (!err) {
 			var links = extractURLs(res);
-			//console.log(links)
+			console.log(links
+				.join("!!")
+				.concat("!!")
+				.replace(/http:\/\/autoplot.org\/git\/jyds\/tsdsfe\.jyds\?http:\/\/tsds.org\/get\/\?catalog=/g,"")
+				.replace(/&dataset=/g,".")
+				.replace(/&parameters=/g,".")
+				.replace(/&start.*?\!\!/g,"!!")
+				.split("!!")
+				.slice(0,-1));
 			var root  = group.process(links);
 			//console.log(root)
 			callback(root);         
@@ -59,11 +66,12 @@ function parseXML(body, callback) {
 
 	// Extract links in XML document.
 	function extractURLs(doc){
+		//console.log(doc)
 		var ret = [];
 		for (var key in doc){
 			if (key === "bookmark") {
 				var urls = doc[key].map(function(item){
-					return item.url[0];
+					return item.uri[0];
 				});
 				ret = ret.concat(urls);
 			} else if (key === "bookmark-list" || key === "bookmark-folder"){
@@ -76,6 +84,7 @@ function parseXML(body, callback) {
 				}
 			}
 		}
+		//console.log(ret)
 		return ret;
 	}
 }

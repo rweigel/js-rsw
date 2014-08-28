@@ -1,10 +1,12 @@
 // node.js
 if (typeof(exports) !== "undefined" && require){
 	treeify = require(__dirname + "/js/treeify").treeify;
+	fs = require("fs");
 	runtest(1,true);
 	runtest(2,true);
 	runtest(3,true);
 	runtest(4,true);
+	runtest(5,true);
 }
 
 function runtest(i,debug) {
@@ -48,6 +50,34 @@ function runtest(i,debug) {
 
 	}
 
+	if (i == 5) {
+		var xml2js = require('xml2js');
+
+		console.log("__________________________________________");
+		console.log("Demo "+i);
+		fs.readFile("xml/sscweb.xml",function (err,data) {
+
+			parser = new xml2js.Parser();
+			parser.parseString(data, function(err, res) {
+
+				var links = extractURLs(res);
+				console.log(links);
+				var links = links
+								.join("!!")
+								.concat("!!")
+								.replace(/http:\/\/autoplot.org\/git\/jyds\/tsdsfe\.jyds\?http:\/\/tsds.org\/get\/\?catalog=/g,"")
+								.replace(/&dataset=/g,".")
+								.replace(/&parameters=/g,".")
+								.replace(/&start.*?\!\!/g,"!!")
+								.split("!!")
+								.slice(0,-1);
+
+				var D = treeify(links,".");
+				console.log(D)
+			})
+		})
+	}
+
 	return;
 
 	if (i == 5) {
@@ -72,6 +102,30 @@ function runtest(i,debug) {
 		json2indent(D);
 	}
 }
+
+	// Extract links in XML document.
+	function extractURLs(doc){
+		//console.log(doc)
+		var ret = [];
+		for (var key in doc){
+			if (key === "bookmark") {
+				var urls = doc[key].map(function(item){
+					return item.uri[0];
+				});
+				ret = ret.concat(urls);
+			} else if (key === "bookmark-list" || key === "bookmark-folder"){
+				if (Object.prototype.toString.call(doc[key]) === '[object Array]'){
+					doc[key].forEach(function(item){
+						ret = ret.concat(extractURLs(item));
+					});
+				} else {
+					ret = ret.concat(extractURLs(doc[key]));
+				}
+			}
+		}
+		//console.log(ret)
+		return ret;
+	}
 
 //<bookmark-list version="1.1">
 //	<bookmark-folder>
