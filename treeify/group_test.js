@@ -3,6 +3,8 @@ var group   = require("./js/group");
 
 var url = "http://autoplot.org/bookmarks/SuperMAG.xml";
 //var url = "http://viviz.org/gallery/images/autoplot-tests/";
+var url = "http://localhost:8004/?catalog=SSCWeb&return=tsds";
+
 
 // Fetch and parse links from URL
 request(url, function (error, response, body) {

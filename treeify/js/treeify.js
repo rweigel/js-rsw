@@ -5,23 +5,23 @@ if (typeof(exports) !== "undefined" && require){
 
 var	debug = false;
 
-function treeify(names,level,parent) {
+function treeify(names,delim,level,parent) {
 
-	if (typeof("level") === "undefined") level = 0;
+	var start = new Date().getTime();
+	if (debug) console.log("Call treeify.");
 
-	delim = ".";
-	delimre = /\./;
-	
-	names.sort();
+	if (arguments.length == 2) {
+		//treeify.callback = level;
+		level = 0;
+		parent = "";
+	}
+
 	if (!treeify.n) {
 		treeify.n = 0;
 	} else {
 		treeify.n = treeify.n+1;
 	}
-	if (!parent) {
-		if (debug) console.log("treeify.js: Setting parent to blank")
-		var parent = "";
-	}
+
 	if (debug) {
 		console.log("treeify.js: Level = " + level);
 		console.log("treeify.js: Names = ")
@@ -29,6 +29,7 @@ function treeify(names,level,parent) {
 	}
 	if (debug) console.log("parent: " + parent)
 	
+	names.sort();
 	var cont = 0;
 
 	var L  = new Array();
@@ -44,7 +45,7 @@ function treeify(names,level,parent) {
 			console.log("treeify.js: Names has one element");
 			console.log(names[0]);
 		}
-		if (names[0].match(delimre)) {
+		if (names[0].match(delim)) {
 			if (debug) {
 				console.log("treeify.js: Names has one element with delimeter");
 				console.log(names);
@@ -74,9 +75,9 @@ function treeify(names,level,parent) {
 	for (var i = 0;i < names.length;i++) {
 		var tmpa = [];
 
-		tmpa  = names[i].split(".");
+		tmpa  = names[i].split(delim);
 		L[i]  = tmpa[0];
-		Lr[i] = tmpa.slice(1).join(".");
+		Lr[i] = tmpa.slice(1).join(delim);
 
 		if (Lr[i] != "") {
 			cont = 1;
@@ -108,7 +109,7 @@ function treeify(names,level,parent) {
 				console.log('treeify.js: ilast: '+ilast)
 			}
 			var lt = Lr.slice(ilast);
-			D[L[i-1]] = treeify(lt,level+1,L[i-1]);			
+			D[L[i-1]] = treeify(lt,delim,level+1,L[i-1]);			
 		} else if (i > 0 && L[i] != L[i-1]) {
 			if (debug) {
 				console.log("treeify.js: +Creating new directory named " + L[i-1]);
@@ -117,7 +118,7 @@ function treeify(names,level,parent) {
 			}
 			var lt = Lr.slice(ilast,i);
 			if (debug) console.log("a parent: " + parent);
-			tmp = treeify(lt,level+1,L[i-1]);
+			tmp = treeify(lt,delim,level+1,L[i-1]);
 			if (debug) console.log("b parent: " + parent);
 			if (tmp == ".") {
 				if (debug) console.log(i);
@@ -127,14 +128,14 @@ function treeify(names,level,parent) {
 			} else {
 				if (debug) console.log("treeify.js: Call treeify with remainder");
 				if (debug) console.log("treeify.js: Parent: " + parent);
-				D[L[i-1]] = treeify(lt,level+1,L[i-1]);
+				D[L[i-1]] = treeify(lt,delim,level+1,L[i-1]);
 			}
 			if (i == names.length - 1 ) {
 				if (debug) {
 					console.log("treeify.js: Creating new directory named " + L[i]);
 					console.log("treeify.js: Call treeify with remainder");
 				}
-				D[L[i]] = treeify(Lr.slice(i),level+1,L[i]);
+				D[L[i]] = treeify(Lr.slice(i),delim,level+1,L[i]);
 			}
 			ilast = i;
 		}  
@@ -145,6 +146,10 @@ function treeify(names,level,parent) {
 		return names
 	}
 	
+	var stop = new Date().getTime();
+	if (debug) console.log("Finished treeify in "+(stop-start)+" ms");
+
+	//treeify.callback(D)
 	return D;
 }
 
