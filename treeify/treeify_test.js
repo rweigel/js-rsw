@@ -61,7 +61,16 @@ function runtest(i,debug) {
 			parser.parseString(data, function(err, res) {
 
 				var links = extractURLs(res);
-				console.log(links);
+				for (var i = 0; i < links.length; i++) {
+					var parameters = links[i].replace(/.*parameters=(.*?)\&.*/,"$1");
+					//console.log(parameters)
+					var dataset    = links[i].replace(/.*dataset=(.*?)\&.*/,"$1");
+					//console.log(dataset)
+					var catalog    = links[i].replace(/.*catalog=(.*?)\&.*/,"$1");
+					//console.log(catalog)
+					links[i] = catalog + "." + catalog + "/" + dataset + "." + catalog + "/" + dataset + "/" + parameters;
+				}
+				if (0) {
 				var links = links
 								.join("!!")
 								.concat("!!")
@@ -71,9 +80,10 @@ function runtest(i,debug) {
 								.replace(/&start.*?\!\!/g,"!!")
 								.split("!!")
 								.slice(0,-1);
-
+				}
 				var D = treeify(links,".");
-				console.log(D)
+				console.log(D);
+				json2xml(D);
 			})
 		})
 	}
@@ -155,6 +165,9 @@ function json2xml(obj,level) {
 		indent += "  ";
 	}
 
+	function key2str(key) {
+		
+	}
 	var DirOpenRoot = '<bookmark-list version="1.1">';
 	var DirCloseRoot = '</bookmark-list>';
 	//var FolderOpen = '<bookmark-folder><title></title><description></description><bookmark-list>';

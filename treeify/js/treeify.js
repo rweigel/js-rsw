@@ -10,6 +10,7 @@ function treeify(names,delim,level,parent) {
 	var start = new Date().getTime();
 	if (debug) console.log("Call treeify.");
 
+	var delim = delim || "."
 	if (arguments.length == 2) {
 		//treeify.callback = level;
 		level = 0;
