@@ -18,7 +18,7 @@ var fs = require('fs');
 var express = require('express');
 var app = express();
 
-if (!fs.existsSync('GeoLite2-City-Blocks.json')) {
+if ( !fs.existsSync('GeoLite2-City-Blocks.json' ) ) {
     console.log("Reading CSV file.");
     // Synchronous read.
     d = fs.readFileSync('GeoLite2-City-Blocks.csv');
@@ -28,24 +28,26 @@ if (!fs.existsSync('GeoLite2-City-Blocks.json')) {
     var da = d.toString().split("\n");
     console.log("Done parsing file to JSON.");
 
-    console.log("Creating array to be queried.  Length = " + da.length);
-    var A = [];
+    console.log("Creating map to be queried.  Length = " + da.length);
+    var A = {};
 
     // Save fewer records:
-    //for (var i = 1;i < 1000; i++) {
+    //debug for (var i = 1;i < 1000; i++) {
     for (var i = 1; i < da.length; i++) {
         row = da[i].split(",");
-        A[i - 1] = {};
-        A[i - 1].ip = row[0].replace("::ffff:", "");
-        A[i - 1].info = da[i];
+        ip= row[0].replace("::ffff:", "");
+        if ( ip.match('.*\.0\.0' ) ) ip= ip.substring(0,ip.length-4);
+        if ( ip.match('.*\.0' ) ) ip= ip.substring(0,ip.length-2);
+        A[ip] = row[6]+" " +row[7];
+        //debug console.log( "" +  row[0].replace("::ffff:", "") + " " + ip + " " +  A[ip] );
     }
     console.log("Done creating array to be queried.");
 
-    console.log("Converting array to JSON string.");
+    console.log("Converting map to JSON string.");
     var As = JSON.stringify(A);
-    console.log("Done converting array to JSON string.");
+    console.log("Done converting map to JSON string.");
 
-    console.log("Saving array to be queried as JSON.");
+    console.log("Saving map to be queried as JSON.");
     // Async write
     fs.writeFile("GeoLite2-City-Blocks.json", As, function() {
         console.log("Done saving array to be queried as JSON.");
@@ -60,10 +62,7 @@ if (!fs.existsSync('GeoLite2-City-Blocks.json')) {
 
 if (!process.argv[2]) {
     app.get('/', function(req, res) {
-        
-        res.send(bestmatch(req.query.ip) || "{}");
-        //res.send("hello");
-        
+        res.send( bestmatch(req.query.ip) || "(not found)" );
     });
     var server = app.listen(3000, function() {
         console.log('Listening on port %d', server.address().port);
@@ -78,7 +77,7 @@ function bestmatch(ip) {
     var best = "";
     for (var i = ipa.length; i > 0; i--) {
         var ippartial = ipa.slice(0, i).join(".");
-        var q = query('ip').startsWith(ippartial).on(A).pop();
+        var q = A[ippartial];
         console.log("Query: " + ippartial + "; Result: ");
         console.log(q);
         if (typeof(q) !== "undefined") {
