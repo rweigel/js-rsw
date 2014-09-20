@@ -19,14 +19,15 @@ var express = require('express');
 var app = express();
 
 if ( !fs.existsSync('GeoLite2-City-Blocks.json' ) ) {
+    var currentTimeMillis = new Date().getTime();
     console.log("Reading CSV file.");
     // Synchronous read.
     d = fs.readFileSync('GeoLite2-City-Blocks.csv');
-    console.log("Done reading CSV file.");
+    console.log("Done reading CSV file. ("+ (new Date().getTime() - currentTimeMillis)+"ms)");
 
-    console.log("Parsing file to JSON.");
+    console.log("Formatting file to JSON.");
     var da = d.toString().split("\n");
-    console.log("Done parsing file to JSON.");
+    console.log("Done formatting file to JSON.");
 
     console.log("Creating map to be queried.  Length = " + da.length);
     var A = {};
@@ -41,7 +42,7 @@ if ( !fs.existsSync('GeoLite2-City-Blocks.json' ) ) {
         A[ip] = row[6]+" " +row[7];
         //debug console.log( "" +  row[0].replace("::ffff:", "") + " " + ip + " " +  A[ip] );
     }
-    console.log("Done creating array to be queried.");
+    console.log("Done creating array to be queried. ("+ (new Date().getTime() - currentTimeMillis)+"ms)");
 
     console.log("Converting map to JSON string.");
     var As = JSON.stringify(A);
@@ -50,14 +51,15 @@ if ( !fs.existsSync('GeoLite2-City-Blocks.json' ) ) {
     console.log("Saving map to be queried as JSON.");
     // Async write
     fs.writeFile("GeoLite2-City-Blocks.json", As, function() {
-        console.log("Done saving array to be queried as JSON.");
+        console.log("Done saving map to be queried as JSON. ("+ (new Date().getTime() - currentTimeMillis)+"ms)" );
     });
 
 
 } else {
-    console.log("Reading JSON file.");
+    var currentTimeMillis = new Date().getTime();
+    console.log("Reading database from JSON file.");
     A = JSON.parse(fs.readFileSync('GeoLite2-City-Blocks.json'));
-    console.log("Done reading JSON file.");
+    console.log("Done reading JSON file. ("+ (new Date().getTime() - currentTimeMillis)+"ms)" ) ;
 }
 
 if (!process.argv[2]) {
