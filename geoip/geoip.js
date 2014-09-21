@@ -32,6 +32,8 @@ if ( !fs.existsSync('GeoLite2-City-Blocks.json' ) ) {
     console.log("Creating map to be queried.  Length = " + da.length);
     var A = {};
 
+    var ip;  // make sure it is local. 
+    
     // Save fewer records:
     //debug for (var i = 1;i < 1000; i++) {
     for (var i = 1; i < da.length; i++) {
@@ -62,17 +64,6 @@ if ( !fs.existsSync('GeoLite2-City-Blocks.json' ) ) {
     console.log("Done reading JSON file. ("+ (new Date().getTime() - currentTimeMillis)+"ms)" ) ;
 }
 
-if (!process.argv[2]) {
-    app.get('/', function(req, res) {
-        res.send( bestmatch(req.query.ip) || "(not found)" );
-    });
-    var server = app.listen(3000, function() {
-        console.log('Listening on port %d', server.address().port);
-    });
-} else {
-    bestmatch( process.argv[2] );
-}
-
 function bestmatch(ip) {
     var currentTimeMillis = new Date().getTime();
     var ipa = ip.split(".");
@@ -93,5 +84,59 @@ function bestmatch(ip) {
     }
     console.log("Time to load: " + (new Date().getTime() - currentTimeMillis));
     return best;
+}
+
+var http = require('http');
+
+var serverCallback= function (req, res) {
+  var body = "";
+  req.on('data', function (chunk) {
+    console.log('data: ' + chunk);
+    chunk= chunk.toString();
+    chunk= chunk.replace(/\%0D\%0A/gi,'\n');  //TODO: Why must I do this?  Who puts in the DOS newlines?
+    body += chunk;
+  });
+  req.on('end', function () {
+    body= body.replace('ipnumbers=','');  // TODO: Why must I do this?  Who puts in the ipnumbers=?  That must be a node thing.
+    console.log('POSTed: ' + body);
+    res.writeHead(200);
+    
+    var resultHTML= "";
+    numbers= body.split("\n");
+    
+    console.log( "numbers:" + numbers );
+    for ( var i=0; i<numbers.length; i++ ) {
+        number= numbers[i].trim();
+        console.log('in '+number+' out:');
+        if ( number.length>0 ) {
+            resultHTML+= number + " " + bestmatch( number ) + "<br>";
+        }
+    }
+    
+    
+    var postHTML = 
+  '<html><head><title>Enter IP address to Lat/Lon</title></head>\n' +
+  '<body>\n' +
+  '<h1>IP address look up based on GeoLite2-City-Blocks.20140805.csv</h1>\n' + 
+  '<em><small>This is the JavaScript implementation.</small></em><br>\n' +
+  '<form method="POST">' + 
+  '    <textarea name="ipnumbers" rows="12" cols="20">128.255.33.127\n' +
+    '209.181.207.107\n' +
+    '204.121.60.11\n' +
+    '</textarea><br>' +
+  '    <input type="submit">' +
+  '</form><br>' ;
+  res.write(postHTML);
+  res.write(resultHTML);
+  res.write('</body></html>');
+  res.end('');
+    
+  });
+};
+
+try {
+    http.createServer(serverCallback).listen(8083); //TODO: why can't I catch this error?
+} catch ( err ) {
+    console.log("Unable to start server: " + err );
 }
 
