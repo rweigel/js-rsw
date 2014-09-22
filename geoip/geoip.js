@@ -6,10 +6,9 @@
  
  # Start server
  node geoip.js
- curl http://localhost:3000/?ip=1.228.1.1
+ (then browse to http://localhost:8083/)
  
  # Command line test
- node geoip.js 1.228.1.1
  
  */
 
@@ -135,7 +134,7 @@ var serverCallback= function (req, res) {
 };
 
 try {
-    http.createServer(serverCallback).listen(8083); //TODO: why can't I catch this error?
+    http.createServer(serverCallback).listen( 8083 ); //TODO: why can't I catch this error?
 } catch ( err ) {
     console.log("Unable to start server: " + err );
 }
