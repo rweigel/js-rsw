@@ -8,14 +8,16 @@
  node geoip.js
  (then browse to http://localhost:8083/)
  
- # Command line test
- 
+ lines 19-20 disable logging.
  */
 
 var query = require('array-query');
 var fs = require('fs');
 var express = require('express');
 var app = express();
+
+// comment out the following line to enable logging.
+console.log= function(msg) {};
 
 if ( !fs.existsSync('GeoLite2-City-Blocks.json' ) ) {
     var currentTimeMillis = new Date().getTime();
@@ -100,6 +102,7 @@ var serverCallback= function (req, res) {
     console.log('POSTed: ' + body);
     res.writeHead(200);
     
+    var t0= new Date().getTime();
     var resultHTML= "";
     numbers= body.split("\n");
     
@@ -111,7 +114,6 @@ var serverCallback= function (req, res) {
             resultHTML+= number + " " + bestmatch( number ) + "<br>";
         }
     }
-    
     
     var postHTML = 
   '<html><head><title>Enter IP address to Lat/Lon</title></head>\n' +
@@ -127,6 +129,7 @@ var serverCallback= function (req, res) {
   '</form><br>' ;
   res.write(postHTML);
   res.write(resultHTML);
+  res.write('<small><em>request processed ' + numbers.length + ' items in ' + ( new Date().getTime() - t0 ) + 'ms</em></small>');
   res.write('</body></html>');
   res.end('');
     
