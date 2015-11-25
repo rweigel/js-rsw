@@ -20,7 +20,7 @@
     <script type="text/javascript" src="http://www.humblesoftware.com/static/js/flotr2.min.js"></script>
     <script type="text/javascript">
 
-  var
+ var
     d1    = [],
     start = new Date("2009/01/01 01:00").getTime(),
     options,
@@ -28,28 +28,30 @@
     i, x, o;
 
   for (i = 0; i < 100; i++) {
-    x = start+(i*3600*24);
+    //x = start+(i*1000*3600*24*36.5);
+    //x = start+(i*1000*3600);
+    x = start+(i*1000*60);
     d1.push([x, i+Math.random()*30+Math.sin(i/20+Math.random()*2)*20+Math.sin(i/10+Math.random())*10]);
   }
         
   options = {
     xaxis : {
-      mode : 'time',
-      timeMode: 'local', 
+      mode : 'time', 
       labelsAngle : 45,
+      timeMode: "local",
       HtmlText : true,
-      title: "Label<sup>10</sup>"
+      fontSize: 12,
+      title: "X"
     },
     yaxis : {
-      labelsAngle : 90,
+      title: "Y",
       HtmlText : true,
-      title: "Label<sup>10</sup>"
     },
     selection : {
-      mode : 'xy'
+      mode : 'x'
     },
     HtmlText : true,
-    title : 'Time<sup>10</sup>'
+    title : 'Time'
   };
         
   // Draw graph with default options, overwriting with passed options
@@ -71,7 +73,7 @@
   Flotr.EventAdapter.observe(container, 'flotr:select', function(area){
     // Draw selected area
     graph = drawGraph({
-      xaxis : { min : area.x1, max : area.x2, mode : 'time', labelsAngle : 45 },
+      xaxis : { min : area.x1, max : area.x2 },
       yaxis : { min : area.y1, max : area.y2 }
     });
   });
