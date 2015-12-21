@@ -1,43 +1,68 @@
-var cluster = require('cluster');
-var http    = require('http');
-var numCPUs = require('os').cpus().length;
-var fs = require('fs')
-var request  = require("request")
+var cluster = require('cluster')
+var http    = require('http')
+var numCPUs = require('os').cpus().length
+var fs      = require('fs')
+var request = require("request")
+var express = require('express')
+var app     = express()
+var server  = require("http").createServer(app)
 
 var respectHeaders = false
 
 var RLOCK = {}
 var WLOCK = {}
 if (cluster.isMaster) {
-	// Fork workers.
- 	for (var i = 0; i < numCPUs; i++) {
-		cluster.fork()
+
+    cluster.on('fork', function(worker) {
+        worker.on('message', messageRelay)
+    })
+    cluster.on('disconnect', function (worker) {
+		console.log('worker ' + worker.process.pid + ' disconnected.  Forking a new worker.')
+        cluster.fork()
+    })
+	cluster.on('exit', function(worker, code, signal) {
+		console.log('worker ' + worker.process.pid + ' exited; code: ' + code + ' signal: ' + signal)
+	})
+
+    for (var i = 0; i < numCPUs; i++) {
+        cluster.fork()
+    }
+
+    var messageRelay = 
+    	function(msg) {
+        	Object.keys(cluster.workers).forEach(function(id) {
+            	cluster.workers[id].send(msg)
+        	})
+    	}
+
+	app.get('/', function (req, res) {
+		console.log("Master  " + process.pid + " received request and is responding with OK.")
+		res.end("OK\n")
+	})
+	server.listen(8001)
+
+} else {
+
+	var messageHandler = function messageHandler(msg) {
+		console.log("Process " + process.pid + " received: " + msg)
 	}
 
-	http.createServer(function(req, res) {
-		console.log("Master: " + process.pid)
-		console.log(RLOCK)
-		RLOCK["master"] = true
-		res.end("OK")
-	}).listen(8001)
+	process.on('message', messageHandler)
 
-	cluster.on('exit', function(worker, code, signal) {
-		console.log('worker ' + worker.process.pid + ' died.')
-	})
-} else {
-	// Workers can share any TCP connection
-	// In this case it is an HTTP server
-	http.createServer(function(req, res) {
-		console.log("----")
-		console.log("Process: " + process.pid)
-		rq = request("http://localhost:8001/?file=file.txt", 
+	// Main entry route
+	app.get('/', function (req, res) {
+		console.log("Process "  + process.pid + " received request.")
+		process.send("Process " + process.pid + " is handling request.")
+
+		rq = request("http://localhost:8001/?file=file.txt&status=lock", 
 			function (error, response, body) {
-  				if (!error && response.statusCode == 200) {
-    				console.log("--") 
-    				//res.end("OK2")
-					cachetool("http://google.com/", "file.txt", res)
-  				}})
-	}).listen(8000)
+				if (!error && response.statusCode == 200) {
+					res.end("OK\n")
+					//cachetool("http://google.com/", "file.txt", res)
+				}})
+	})
+
+	server.listen(8000)
 }
 
 function cachetool(url, file, res) {
@@ -121,8 +146,8 @@ function fetchandpipe(arr) {
 }
 
 function initialize(fname) {
-
 }
+
 function wlock(arr, cb) {
 
 	var fname = arr[1]
@@ -218,5 +243,4 @@ function rlock(arr, cb) {
 	console.log("Setting RLOCK[fname].checking = false.")
 	RLOCK[fname].checking = false
 	console.log(RLOCK)
-
 }
