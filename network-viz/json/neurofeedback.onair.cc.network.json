@@ -1,0 +1,564 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html class="no-js ie6" lang="en-US"> <![endif]-->
+<!--[if IE 7 ]>    <html class="no-js ie7" lang="en-US"> <![endif]-->
+<!--[if IE 8 ]>    <html class="no-js ie8" lang="en-US"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html class="no-js" lang="en-US"> <!--<![endif]-->
+<head>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+<title>Neurofeedback </title>
+
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://neurofeedback.onair.cc/xmlrpc.php" />
+
+<link href="http://fonts.googleapis.com/css?family=Arimo:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+
+<link rel="alternate" type="application/rss+xml" title="Neurofeedback  &raquo; Feed" href="http://neurofeedback.onair.cc/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Neurofeedback  &raquo; Comments Feed" href="http://neurofeedback.onair.cc/comments/feed/" />
+<link rel='stylesheet' id='responsive-style-css'  href='http://neurofeedback.onair.cc/wp-content/themes/onair/style.css?ver=1.2.0' type='text/css' media='all' />
+<link rel='stylesheet' id='base-css'  href='http://neurofeedback.onair.cc/wp-content/themes/onair/modules/base/css/base.css?ver=3.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='bootstrap-styles-css'  href='http://neurofeedback.onair.cc/wp-content/themes/onair/lib/bootstrap/bootstrap.css?ver=2.0.2' type='text/css' media='all' />
+<link rel='stylesheet' id='bootstrap-responsive-styles-css'  href='http://neurofeedback.onair.cc/wp-content/themes/onair/lib/bootstrap/bootstrap-responsive.css?ver=2.0.2' type='text/css' media='all' />
+<link rel='stylesheet' id='colorbox-css'  href='http://neurofeedback.onair.cc/wp-content/themes/onair/assets/css/colorbox.css?ver=1.3.19' type='text/css' media='all' />
+<link rel='stylesheet' id='onair-css'  href='http://neurofeedback.onair.cc/wp-content/themes/onair/modules/oa/css/oa.css?ver=3.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='responsive_overlay-css'  href='http://neurofeedback.onair.cc/wp-content/themes/onair/modules/responsive/css/responsive.css?ver=3.6.1' type='text/css' media='all' />
+<script type='text/javascript' src='http://neurofeedback.onair.cc/wp-includes/js/jquery/jquery.js?ver=1.10.2'></script>
+<script type='text/javascript' src='http://neurofeedback.onair.cc/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://neurofeedback.onair.cc/wp-content/themes/onair/lib/responsive-modernizr.js?ver=2.5.3'></script>
+<script type='text/javascript' src='http://neurofeedback.onair.cc/wp-content/themes/onair/lib/jquery.masonry.min.js'></script>
+<script type='text/javascript' src='http://neurofeedback.onair.cc/wp-content/themes/onair/lib/bootstrap/bootstrap.js?ver=3.6.1'></script>
+<script type='text/javascript' src='http://neurofeedback.onair.cc/wp-content/themes/onair/assets/js/menu-imp.js'></script>
+<script type='text/javascript' src='http://neurofeedback.onair.cc/wp-content/themes/onair/lib/jquery.cycle.all.js'></script>
+<script type='text/javascript' src='http://neurofeedback.onair.cc/wp-content/themes/onair/assets/js/left-nav-imp.js?ver=3.6.1'></script>
+<script type='text/javascript' src='http://neurofeedback.onair.cc/wp-content/themes/onair/lib/strap-extras.js?ver=3.6.1'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://neurofeedback.onair.cc/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://neurofeedback.onair.cc/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 3.6.1" />
+	<link rel="canonical" href="http://neurofeedback.onair.cc/" />
+	<meta name="description" content="Just another on_air site" />
+    <script type="text/javascript" defer>
+    // <![CDATA[
+    jQuery(document).ready(function($){
+        $("a[rel='colorbox']").colorbox({
+                transition:'elastic', 
+                opacity:'0.7', 
+                maxHeight:'90%'
+        });
+        $("a.gallery").colorbox({
+                rel:'group'
+        });
+        $("a[rel='colorboxvideo']").colorbox({
+                iframe:true, 
+                transition:'elastic', 
+                opacity:'0.7',
+                innerWidth:'60%', 
+                innerHeight:'80%'
+        });
+    });  
+    // ]]>
+    </script>
+
+	<link href='http://fonts.googleapis.com/css?family=Chivo:400,900' rel='stylesheet' type='text/css'>
+
+	
+	<link rel="icon" type="image/x-icon" href="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/icons/favicon.ico" /><!-- Userset styling --><style type="text/css"></style><script type="text/javascript">var oa_cycle_auto_play = true; var oa_cycle_delay_check = false;</script></head>
+
+<body class="home blog">
+                 
+	   		
+        <header id="header">
+  
+        
+    	<div class="top-title-container">	
+		<div class="top-title container">
+               
+                
+            <div id="logo" class="col-140 mid-layout">
+							</div><!-- end of #logo -->
+            
+			
+			<div class="page-name col-620 mid-layout">
+				<div class="spacer-top">
+				</div>
+				<h1 class="main-name"><a href="http://neurofeedback.onair.cc/" title="Neurofeedback " rel="homepage">Neurofeedback </a></h1>
+				<h5>Just another on_air site</h5>			
+			</div>
+			
+            <div class="col-180 fit mid-layout">
+				<div class="right-header-inner">
+					<!--<div id="searchhead"><php thematic_search_form(); > </div>-->
+					<div class="right-header-widgetized">							
+							<ul>
+							
+								<li><a href="http://cos.gmu.edu" target="_blank">College of Science</a></li>
+								<li><a href="http://gmu.edu" target="_blank">George Mason University</a></li>
+								<li><a href="http://peoplefinder.gmu.edu" target="_blank">People Finder</a></li>
+							
+							</ul>
+							
+												</div>
+				</div>	
+			</div>
+			
+		</div>
+	</div>
+		
+
+    <div class="navbar navbar-fixed-top">
+      <nav class="navbar-inner">
+        <div class="container">
+        
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+  
+            <div class="nav-collapse">
+			<a class="oa-navicon" id="nav-home-icon" href="http://neurofeedback.onair.cc" title="Click to return Home">
+				
+				<span class="navicon2" >
+											<img id="nav-home-icon-yellow" src="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/home_yellow.png" oa-alt="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/home.png" style="padding:4px 10px 0px 10px;" alt="Home">
+									</span>
+			</a>
+			
+            
+			<a href="#" rel="tooltip" data-placement="bottom" title="Coming Soon!" id="nav-switch-icon" class="oa-navicon" title="Navigation">
+				
+				<span class="navicon3" >  
+					<img src="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/navicon.png" oa-alt="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/navicon_yellow.png" style="padding:4px 10px 0px 10px;" alt="Navigation Switch">
+				</span>
+			</a>
+     
+     <div class="btn-group">
+            <a href="#" id="social_bottom" class="dropdown-toggle" data-toggle="dropdown" title="Social">
+				
+				<span class="naviconquick" >  
+					<img src="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/social.png" oa-alt="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/social.png" style="padding:4px 10px 0px 10px;" alt="Navigation Switch">
+				</span>
+			</a>
+             <ul class="dropdown-menu">
+    <!-- dropdown menu links -->
+               
+            <ul class="social-icons nav pull-right"></ul><!-- end of .social-icons -->           </ul>
+  </div>
+  
+            <div class="btn-group">
+            <a href="#" id="quick_bottom" class="dropdown-toggle" data-toggle="dropdown" title="Quicklinks">
+				
+				<span class="naviconquick" >  
+					<img src="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/quicklinks.png" oa-alt="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/quicklinks_yellow.png" style="padding:4px 10px 0px 10px;" alt="Navigation Switch">
+				</span>
+			</a>
+             <ul class="dropdown-menu">
+    <!-- dropdown menu links -->
+    					<div class="quicklinks-widget">		
+							<ul>
+							
+								<li><a href="#" target="_blank">Currently no quicklinks</a></li>
+							
+							</ul>
+					</div>		
+								
+  </ul>
+  </div>
+  
+  <div id="searchhead">
+						<form id="searchform" method="get" action="http://neurofeedback.onair.cc/">
+
+							<div>
+								<input id="s" name="s" type="text" value="Search this site" onfocus="if (this.value == 'Search this site') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search this site';}" size="32" tabindex="1" />
+
+								<input id="searchsubmit" name="searchsubmit" type="submit" value="Search" tabindex="2" />
+							</div>
+
+						</form>
+
+					 </div>
+            
+            <a class="navpulldown oa-navicon" id="nav-pulldown-icon" title="Open Menu">
+				
+				<span class="navicon" style="">  
+					<img src="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/menu.png" oa-alt="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/menu_yellow.png" style="padding:4px 10px 0px 10px;" alt="Menu">
+				</span>
+                
+			</a>
+            </div>
+			   <ul id="menu-spacs-menus" class="nav"><li id="menu-item-1" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1"><a href="http://neurofeedback.onair.cc/category/uncategorized/" >Uncategorized </a></li></ul>            </div>
+            
+        </div>
+
+        </nav>
+				
+		<!-- Begin Strata Nav -->
+		<!-- Menu / Start
+		================================================== -->
+		<nav class="strata-menu style-1">
+			<ul class="strata-menu">
+						<li><a href="#">Nav item 1</a></li>
+					   
+						<li><a href="#">Nav item 2</a></li>
+						<li><a href="#" class="arrow">Nav item 3</a>
+							<!-- Drop-Down / Start -->
+							<ul>
+								<li><a href="#" class="arrow2">Sub A item 1</a>
+								<ul>
+								<li><a href="#">Sub B item 1</a></li>
+								<li><a href="#"  class="arrow2">Sub B item 2</a>
+								<ul>
+								<li><a href="#">Sub C item 1</a></li>
+								<li><a href="#" class="arrow2">Sub C item 2</a>
+								<ul>
+								<li><a href="#">Sub D item 1</a></li>
+								<li><a href="#">Sub D item 2</a></li>
+								<li><a href="#">Sub D item 3</a></li>
+							</ul>
+							</li>
+								<li><a href="#">Sub C item 3</a></li>
+								<li><a href="#">Sub C item 4</a></li>
+								<li><a href="#">Sub C item 5</a></li>
+							</ul>
+							</li>
+								<li><a href="#">Sub B item 3</a></li>
+							</ul>
+							</li>
+								<li><a href="#">Sub A item 2</a></li>
+								<li><a href="#">Sub A item 3</a></li>
+								<li><a href="#">Sub A item 4</a></li>
+							
+							</ul>
+							<!-- Drop-Down / End -->
+						</li>
+						<li><a href="#">Nav item 4</a></li>
+						<li><a href="#">Nav item 5</a></li>
+						<div class="reset"><a href="#">Reset Menu</a></div>
+						<div class="colorstripe"><div class="color1"></div> <div class="color2"></div><div class="color3"></div><div class="color4"></div><div class="color5"></div></div>
+					</ul>
+					<!-- Drop-Down / End -->
+				</li>
+
+			</ul>
+		</nav>
+
+		<!-- Menu / End
+		================================================== -->
+		<!-- End Advanced Nav -->		
+		
+		<nav class="menu-drawer intel-nav-container" style="display:none;">
+	<ul class="intelnav "><li title="list-item-uncategorized" class="cat-uncategorized"><a class="cat-nav-bottom uncategorized " href="http://neurofeedback.onair.cc/category/uncategorized/">Uncategorized</a></li></ul>		</nav>
+     </div>
+										
+					
+											
+			
+					
+			
+				 
+           
+
+    </header><!-- end of #header -->
+    	    <div class="container">
+    <div id="wrapper" class="clearfix">
+    	<!-- Let's pull the slider -->
+	 <!-- Slider page loaded -->  <!-- Loading 0 stories -->  
+		
+         		 
+
+<!-- oa_category_home_sidebar -->    <div id="widgets" class="home-widgets">
+        <div class="grid col-300">
+                    
+                        
+                            
+			
+                </div><!-- end of .col-300 -->
+
+        <div class="grid col-300">
+                    
+			            
+                            
+			            
+                    </div><!-- end of .col-300 -->
+
+        <div class="grid col-300 fit">
+                    
+                        
+                                        
+		                
+                </div><!-- end of .col-300 fit -->
+    </div><!-- end of #widgets -->
+    </div><!-- end of #wrapper -->
+    </div><!-- end of #container -->
+<div id="footerspacer"></div>
+<div id="footer">
+	<div class="container">
+		<div id="footer-wrapper">
+    
+			<div class="grid col-940 container footer-container">
+             <div class="onspacs-logo">
+								<img alt="network icon" src="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imges/spacs_logo.png" >
+								
+			</div>
+				<div class="grid col-300 footermenu">
+			
+								  
+					
+					&nbsp;|&nbsp;&nbsp;
+                    
+                     <!-- Start How to modal -->
+                    
+                    
+                      <a href="#howto" role="button" data-toggle="modal" rel="tooltip" title="Need help viewing this site?">Viewing this site</a>
+							<div id="howto" class="modal hide fade in" >
+                           
+										<div class="modal-header">
+										  <a class="close" data-dismiss="modal" title="Close"><img alt="Close" src="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/close.png" /></a>
+										 <h8>Using this on_air site</h8>
+										</div>
+										<div class="modal-body">
+							<p>
+							This website is using a new website development system called “on_air” created by AIR networks. The on_air system provides  website users with a number of new viewing  features along with a host of features for site administrators to Manage, Create, and Share their content as well as how to Customize their sites.
+														</p>
+                            
+                             <ul id="tabs" class="nav2 nav-tabs" data-tabs="tabs">
+									<li class="active"><a href="#Placeholder1" data-toggle="tab">Viewing</a></li>
+									<li><a href="#Placeholder2" data-toggle="tab">Super-Admins</a></li>
+									<li><a href="#Placeholder3" data-toggle="tab">Administrators</a></li>
+								</ul>
+								<div id="my-tab-content" class="tab-content">
+									<div class="tab-pane active" id="Placeholder1">
+							<div class="accordion" id="accordion2">
+							<div class="accordion-group">
+							<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+							Slide Show  
+							</a>
+							</div>
+							<div id="collapseOne" class="accordion-body collapse">
+							<div class="accordion-inner">
+							Hover over or tap once on the thumbnails to browse through the posts that the thumbnails are associated with.  Click on or Touch the “Pause” button to the left of the thumbnails to stop the slide show. To go to a post in the slide show, click anywhere on the image or on the title at the top right.  
+							</div>
+							</div>
+							</div>
+							<div class="accordion-group">
+							<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+							Site Map Navigation
+							</a>
+							</div>
+							<div id="collapseTwo" class="accordion-body collapse">
+							<div class="accordion-inner">
+							The Site Map Navigation feature, the icon to the right of the “HOME” icon, enables users to browse all the Categories and Sub-categories within a site. Click on the arrows to open and close a category. By clicking or touching directly on a category, users can go directly to that category and the posts within it.
+							</div>
+							</div>
+							</div>
+                            <div class="accordion-group">
+							<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree">
+							Profile and Course Tables
+							</a>
+							</div>
+							<div id="collapseThree" class="accordion-body collapse">
+							<div class="accordion-inner">
+							 You will find various lists of people, courses, and other content displayed in tables.  Titles at the top of each column describe the contents of the column.  If there is an up/down arrow next to the title, click on the title to sort the items in the table.
+							</div>
+							</div>
+							</div>
+							<div class="accordion-group">
+							<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#collapseFour">
+							Browser compatibility
+							</a>
+							</div>
+							<div id="collapseFour" class="accordion-body collapse">
+							<div class="accordion-inner">
+							on_air websites can be viewed on the latest versions of Chrome; Firefox;  Internet Explorer; and Safari.
+							</div>
+							</div>
+							</div>
+							<div class="accordion-group">
+							<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#collapseFive">
+							Usability on Multiple Devices
+							</a>
+							</div>
+							<div id="collapseFive" class="accordion-body collapse">
+							<div class="accordion-inner">
+							At the present time, on_air websites are best viewed on a PC, tablet, or smartphone with a minimum screen resolution of 1020 pixels wide.  Over the next few months, the user experience on devices with lower screen resolutions will be greatly improved.
+							</div>
+							</div>
+							</div>
+							</div>
+									</div>
+									<div class="tab-pane" id="Placeholder2">
+										<p>Password Protected</p>
+							<div class="well">  
+							<input type="text" class="span3" id="search" data-provide="typeahead" data-items="4" />  
+							</div>  
+							<script defer>  
+							 var subjects = ['PHP', 'MySQL', 'SQL', 'PostgreSQL', 'HTML', 'CSS', 'HTML5', 'CSS3', 'JSON'];   
+							jQuery('#search').typeahead({source: subjects})  
+							</script>  
+									</div>
+									<div class="tab-pane" id="Placeholder3">
+										
+										<p>Password Protected</p>
+							<div class="well">  
+							<input type="text" class="span3" id="search" data-provide="typeahead" data-items="4" />  
+							</div>  
+							<script defer>  
+							 var subjects = ['PHP', 'MySQL', 'SQL', 'PostgreSQL', 'HTML', 'CSS', 'HTML5', 'CSS3', 'JSON'];   
+							jQuery('#search').typeahead({source: subjects})  
+							</script>  
+									</div>
+								 
+								</div>
+                            <script type="text/javascript" defer>
+								jQuery(document).ready(function ($) {
+									jQuery('#tabs').tab();
+								});
+							</script> 
+                                </div><!-- End modal-header -->
+                                
+                                <div class="modal-footer">
+								  <img src="http://www.uffino.com/logob.png" alt="onAir Logo" /><br/>Additional questions and feedback  can be addressed to: <strong>Feedback@onair.cc</strong>. </div>
+                                        
+                                </div><!-- End howto -->
+                                
+                                        
+                                        <!-- End How to modal -->
+                    
+                    
+				</div><!-- end of col-300 -->
+                
+                  <!-- Start How to #1 -->
+                  
+                       <div id="howto1" class="modal hide fade in" >
+                           
+                            <div class="modal-header">
+                              <a title="close" class="close" data-dismiss="modal"><img src="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/close.png" alt="close" /></a>
+                             <h8>Placeholder for How-to title</h8>
+                            </div>
+                                  <div class="modal-body">
+                                        
+                                          <p>
+                                          Placeholder
+                                          </p>
+                            
+                                  </div>
+                             <div class="modal-footer">
+								  <img alt="onAir Logo" src="http://www.uffino.com/logob.png" /><br/>Additional questions and feedback  can be addressed to: <strong>Feedback@onair.cc</strong>. </div>
+                      </div>
+                                        
+                                        <!-- End How to #1 -->
+                                        
+                 <!-- Start How to #2 -->
+                  
+                       <div id="howto2" class="modal hide fade in" >
+                           
+                            <div class="modal-header">
+                              <a class="close" data-dismiss="modal" title="Close"><img alt="close" src="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/close.png"></a>
+                             <h8>Placeholder for How-to title</h8>
+                            </div>
+                                  <div class="modal-body">
+                                        
+                                          <p>
+                                          Placeholder
+                                          </p>
+                            
+                                  </div>
+                             <div class="modal-footer">
+								  <img src="http://www.uffino.com/logob.png"><br/>Additional questions and feedback  can be addressed to: <strong>Feedback@onair.cc</strong>. </div>
+                      </div>
+                                        
+                                        <!-- End How to #2 -->
+                                        
+                   <!-- Start How to #3 -->
+                  
+                       <div id="howto3" class="modal hide fade in" >
+                           
+                            <div class="modal-header">
+                              <a class="close" data-dismiss="modal" title="Close"><img src="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/close.png" alt="Close" /></a>
+                             <h8>Placeholder for How-to title</h8>
+                            </div>
+                                  <div class="modal-body">
+                                        
+                                          <p>
+                                          Placeholder
+                                          </p>
+                            
+                                  </div>
+                             <div class="modal-footer">
+								  <img src="http://www.uffino.com/logob.png"><br/>Additional questions and feedback  can be addressed to: <strong>Feedback@onair.cc</strong>. </div>
+                      </div>
+                                        
+                                        <!-- End How to #3 -->
+                                        
+                   <!-- Start How to #4 -->
+                  
+                       <div id="howto4" class="modal hide fade in" >
+                           
+                            <div class="modal-header">
+                              <a class="close" data-dismiss="modal" title="Close Modal"><img alt="close" src="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/close.png" /></a>
+                             <h8>Placeholder for How-to title</h8>
+                            </div>
+                                  <div class="modal-body">
+                                        
+                                          <p>
+                                          Placeholder
+                                          </p>
+                            
+                                  </div>
+                             <div class="modal-footer">
+								  <img src="http://www.uffino.com/logob.png" alt="onAIR logo" /><br/>Additional questions and feedback  can be addressed to: <strong>Feedback@onair.cc</strong>. </div>
+                      </div>
+                                        
+                                        <!-- End How to #4 -->
+                                        
+				       
+				               
+				<div class="grid col-300 fit powered">
+					 														<ul class="social-icons"></ul><!-- end of .social-icons -->					 				</div><!-- end .powered -->
+		
+			</div>	
+		</div>
+	</div> 
+</div>
+				<div id="after-footer" class="copyright">
+					<div class="container sub-footer">
+                    <div class="onairfooter-logo">
+                    
+                    <!-- Start Footer icon modal -->
+                    
+                    <a href="#onair" role="button" class="btn2" data-toggle="modal" title="onAIR Icon" > <img src="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/on_air_icon_footer.png" alt="onAIR Icon" /></a>
+							<div id="onair" class="modal2 hide fade in" >
+                           <a href="http://www.onair.cc"> <img src="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/powered.png" alt="powered" /></a>
+                            
+										<a class="close2" data-dismiss="modal" alt="Close"><img src="http://neurofeedback.onair.cc/wp-content/themes/onair/assets/imgs/close.png" alt="close" /></a>
+                                        
+                                        <!-- End Footer icon modal -->
+                    </div>
+                    </div>
+             
+										&copy; 2014<a href="http://neurofeedback.onair.cc/" title="Neurofeedback ">
+									Neurofeedback 									</a>
+							  							  							<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
+		<!--        </div> -->
+		</div>
+
+							  
+					
+					</div>
+				</div>		
+<script type='text/javascript' src='http://neurofeedback.onair.cc/wp-content/themes/onair/lib/responsive-scripts.js?ver=1.1.0'></script>
+<script type='text/javascript' src='http://neurofeedback.onair.cc/wp-content/themes/onair/lib/responsive-plugins.js?ver=1.1.0'></script>
+<script type='text/javascript' src='http://neurofeedback.onair.cc/wp-content/themes/onair/lib/jquery.colorbox-min.js?ver=1.3.19'></script>
+<script type='text/javascript' src='http://neurofeedback.onair.cc/wp-content/themes/onair/lib/jquery.autoellipsis-1.0.10.min.js'></script>
+<script type='text/javascript' src='http://neurofeedback.onair.cc/wp-content/themes/onair/lib/slidergen/js/cycle-imp.js?ver=2'></script>
+<script type='text/javascript' src='http://neurofeedback.onair.cc/wp-content/themes/onair/assets/js/masonry-imp.js'></script>
+<script type='text/javascript' src='http://neurofeedback.onair.cc/wp-content/themes/onair/assets/js/external-imp.js'></script>
+</body>
+</html>

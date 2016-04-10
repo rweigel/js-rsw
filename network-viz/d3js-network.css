@@ -1,0 +1,33 @@
+body{
+
+    background-repeat: no-repeat;
+    background-position: 415px 350px;
+ //   background-image:url(css/logo.png);
+ //   color:#FFF;
+    font-family:Arial, Helvetica, sans-serif;
+    min-height:100%;
+}
+
+.node circle.site {
+	//fill: green;
+}
+.node circle.user {
+	fill: blue;
+}
+.node circle.root {
+	//fill: yellow;
+}
+
+svg {
+	 position: absolute;
+}
+
+.node {
+  font: 10px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}

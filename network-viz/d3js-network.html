@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+		<title>WPMS Network</title>
+		
+		<link rel="icon" type="image/ico" href="css/favicon.ico"/>		
+		<link rel="stylesheet" type="text/css" href="d3js-network.css">
+		<script src="d3js-network.js"></script>
+		<script src="http://d3js.org/d3.v3.min.js"></script>
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+		<script type="text/javascript" src="js/jquery.tipsy.js"></script>
+		<link href="css/tipsy.css" rel="stylesheet" type="text/css" />
+
+	</head>
+
+	<body>
+
+	<script>
+
+		// TODO:
+		// (1) Use squares for sites, circles for users.
+		// (2) Color code sites and users.
+		// (3) Add legend for sites.
+		// (4) Use site favicon for center site icon.
+		// (5) Determine server using Javascript location.
+		// (6) On click of a site square, move site to center and fetch its data.
+		// (7) Test on very large network.  Come up with method to show only "interesting" parts of network.
+		// (8) Look into async $.each.  May be needed for large networks.  Or, do the conversion server-side.
+		// http://socilab.com/#home
+		// https://github.com/craigtutterow/sna-js
+
+		// Not used for now.  JSON was downloaded and saved locally.
+		var server  = "http://onair.cc/";
+		var network = "?oaapi=get&the=network";
+		var users   = "?oaapi=get&the=users";  // Not needed; information available in network JSON.
+		var sites   = "?oaapi=get&the=sites";  // Not needed if each user is connected to at least one site.
+
+		var logos = {};
+		logos["http://onair.cc"] = "css/logo.png";
+		logos["http://aramzs.onair.cc"] = "css/aram.jpg"
+
+		$(document).ready(function () {
+			if ("onhashchange" in window) {
+				 window.onhashchange = hashchange;
+			} else {
+				console.log("Browser does not support hashchange event.");
+			}
+			//return;
+			if (location.hash === "") {
+				location.hash = "onair.cc";
+			} else {
+				hashchange();
+			}
+		})
+
+		function hashchange () {
+			var hash = location.hash.replace("#","");
+			console.log("Hash has changed.");
+			document.title = hash + " network";
+			drawnetwork(hash);
+		}
+
+		var sites = {};
+
+		function drawnetwork(domain) {
+			console.log("Drawing network for "+domain+".");
+			
+			var draw = true;
+			if (domain.match("@")) {
+				// The URL is for a user
+				var user = domain.replace(/@.*/,"");
+				var parent = domain.replace(/.*@/,"");
+				if (!drawnetwork[parent]) {
+					// If data for network that user is in was not already loaded (will happen if initial URL is to a user.)
+					console.log("Data for " + parent + " not found.");
+					var draw = false; 
+					domain = parent;
+				} else {
+					// We already have the data, so use it. 
+					//console.log(drawnetwork[parent].children);
+					for (var i = 0;i < drawnetwork[parent].children.length;i++) {
+						//console.log(drawnetwork[parent].children[i].name);
+						if (drawnetwork[parent].children[i].name === user) {
+							drawcircular(drawnetwork[parent].children[i]);
+							break;
+						}
+					}
+					return;
+				}
+			}
+
+			// Data was fetched previously.
+			if (typeof(drawnetwork[domain]) != "undefined") {
+				console.log("Found network information in memory.  Using it instead of making request.");
+				drawcircular(drawnetwork[domain])
+				return;
+			}
+
+			// Will get here if non-user URL or if user URL was specified initially.
+
+			var networkjson = "json/"+domain.replace("http://","").replace(/\/$/,"")+".network.json";
+
+			$.ajax({
+				dataType: "json",
+				url: networkjson,
+				success: function (data) {
+					//console.log(data);
+
+					json = prepJSON(data);
+					console.log("Setting drawnetwork["+domain+"] = ");
+					console.log(json);
+					drawnetwork[domain] = json;
+					if (draw) {
+						drawcircular(json);
+					} else {
+						// Now that we have the data for the user, draw the network.
+						drawnetwork(user+"@"+domain);
+					}
+				},
+				error: function (err) {
+					console.log('Could not retrieve '+networkjson);
+					$("#error").html('Could not retrieve '+networkjson+".  Returning to last network view.").show();
+					setTimeout(function () {
+						history.back();
+						$("#error").hide();
+					},2000)
+					//setTimeout(function () {parent.history.back()},2000);
+				}
+			
+			})
+		}
+
+		function prepJSON(data) {
+
+			// Convert to d3js object used for network, which has form
+			// obj = {name:"",link:"",children:[obj1,obj2,...]}
+
+			var json = {};
+			json["name"] = data["site_name"];
+			json["link"] = data["site_url"];
+			json["type"] = "root";
+
+			console.log(json)
+			if (logos[json["link"]]) {
+				json["image"] = logos[json["link"]];
+			}
+
+			json["children"] = [];
+			var sn = data["site_network"];
+			$.each(sn, function (i,obj) {
+				json.children[i] = {};
+				json.children[i]["name"] = obj.user_nicename;
+				json.children[i]["link"] = "http://" + obj.user_name + ".onair.cc";
+				json.children[i]["type"] = "user";
+
+				if (logos[json["link"]]) {
+					json.children[i]["image"] = logos[json.children[i]["link"]];
+				}
+				//sites[json.children[i]["link"]] = true
+
+				json.children[i]["children"] = [];
+				$.each(obj["member_of"], function (j,obj2) {
+					json.children[i]["children"][j] = {};
+					json.children[i]["children"][j]["name"] = obj2["site_name"];
+					json.children[i]["children"][j]["link"] = obj2["site_url"];
+					json.children[i]["children"][j]["type"] = "site";
+
+					if (logos[json["link"]]) {
+						json.children[i]["children"][j]["image"] = logos[json.children[i]["children"][j]["link"]];
+					}
+
+					sites[json.children[i]["children"][j]["link"]] = true;
+				});
+
+			});
+
+			console.log(sites)
+			// Assign a random color to each site.
+			var tmp = "";
+			for (var property in sites) {
+				if (sites.hasOwnProperty(property)) {
+					//console.log(property);
+					sites[property] = "rgb("+Math.round(255*Math.random())+","
+											+Math.round(255*Math.random())+","
+											+Math.round(255*Math.random())+
+										")";
+				
+					var tmp = tmp + property + " ";
+				}
+			}
+
+			// For temporary bash script which fetches information.
+			console.log(tmp.replace(/http:\/\//g,"").replace(/\.onair\.cc/g,""));
+
+			return json;
+		}
+
+		function setimage(imageurl) {
+			var image = new Image();
+			$(image).load(function () {
+				console.log(image.width);
+				$("body").css('background-position-x',
+					$('g circle').position().left + $('.network').position().left + 3*4.5 - image.width/2)
+				$("body").css('background-position-y',$('g circle').position().top + $('.network').position().top + 3*4.5 - image.height/2);
+			})
+			image.src = imageurl;
+			console.log("Setting background image to "+imageurl)
+			$("body").css('background-image','url('+imageurl+')');
+		}
+
+		function drawcircular(json) {
+
+			if (json["image"]) {
+				console.log(json)
+				setimage(json["image"])
+			} else {
+				$("body").css('background-image','')
+			}
+
+
+			// Based on http://bl.ocks.org/mbostock/4063550
+
+			d3.select("svg.network")
+				.style("opacity", 1)
+				.transition().duration(500).style("opacity", 0).remove();
+
+			var diameter = 1060;
+
+			var tree = d3.layout.tree()
+				.size([360, diameter / 2 - 120])
+				.separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+
+			var diagonal = d3.svg.diagonal.radial()
+										.projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
+
+			var id = "";
+			if (json["type"] === "user") {
+				id = json["link"].replace("http://","").replace(".onair.cc","@onair.cc");
+			} else {
+				id = json["link"].replace("http://","");
+			}
+			var svg = d3.select("body")
+						.append("svg")
+						.attr('class','network')
+						.attr("width", diameter)
+						.attr("height", diameter)
+						.attr("id",id)
+						.append("g")
+						.attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+
+			var nodes = tree.nodes(json);
+			var links = tree.links(nodes);
+
+			if (0) {
+			var tmp = d3
+				.selectAll("g")
+				.data(nodes)
+				.filter(function(d) {
+					if (d.type == "root") {
+						return true;
+					} else {
+						return false;
+					}
+				})
+				.enter()
+				.append('svg:image')
+				.attr('xlink:href','css/logo.png')
+				.attr('x',0)
+				.attr('y',0)
+				.attr('width', '25.8px')
+				.attr('height', '30.2px')
+
+			return;
+			}
+
+			var link = svg.selectAll(".link")
+							.data(links)
+							.enter().append("path")
+							.attr("class", "link")
+							.attr("d", diagonal);
+
+			var node = svg.selectAll(".node")
+							.data(nodes)
+							.enter().append("g")
+							.attr("class", function(d) {return d.type + " node"})
+							.attr("transform",
+									function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+
+
+
+			node.append("circle")
+				.attr("r", function(d) {return d.type === "root" ? 4.5 : 4.5})
+				.attr('class',function(d) {return d.type})
+				.attr('fill',function (d,i) {
+					if (d.type === "root") {
+						return sites[d.link]
+						//return "url(#image)"
+					} else {
+						return sites[d.link]
+					}
+				})
+				.attr('fill-opacity',function (d,i) {
+					if (i == 0) {
+						return 0.4
+					} else {
+						return 1.0;
+					}
+				})
+				.on('click', function (d) {
+					console.log("Circle clicked.");
+					if (d.type === "user") {
+						location.hash = d.link.replace(".onair.cc","@onair.cc").replace("http://","");
+					} else {				
+						location.hash = d.link.replace("http://","");
+					}
+					//setimage(d);
+				})
+				.on("mouseover" ,function (d) {
+					//console.log($(this));
+					//if (!(d.type === "root")) {
+						$("g title:contains('"+d.link+"')").prev().each(function () {
+							var rnow = parseInt($(this).attr('r'));
+							$(this).attr('rlast',rnow);
+							$(this).attr('r',3*rnow);
+						});
+					//}
+
+					// console.log(sites[d.link])
+					// Put tooltip code here
+					// http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
+				})
+				.on("mouseout" ,function (d) {
+					//console.log(this);
+					$("g title:contains('"+d.link+"')").prev().each(function () {
+						var rlast = parseInt($(this).attr('rlast'));
+						// Mouseout can occur before mousover when a node is clicked and cursor ends up on a node in the new network.  In this case rlast will be NaN.
+						if (!isNaN(rlast)) $(this).attr('r',rlast);
+					});
+				})
+
+			// Have link appear in tooltip
+			node.append('svg:title')
+				.text(function(d) {return d.link})
+
+			node.append("a")
+				.attr('xlink:href',function(d) {return d.link})
+				.attr('svg:title',function(d) {return d.link})
+				.append("text")
+					.attr("dy", ".31em")
+					.attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+					.attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
+					.text(function(d) { return d.name; });
+
+			// tooltips don't appear in all browsers, so use library.
+			$('svg circle').tipsy({ 
+				gravity: 'w', 
+				html: true, 
+				title: function () {return "Showing all matching nodes."}
+					
+			});
+			$('svg a').tipsy({ 
+				gravity: 'w', 
+				html: true, 
+				title: function () {return "Click to go to " + this.__data__.link}
+					
+			});
+
+
+
+			d3.select(self.frameElement).style("height", diameter - 150 + "px");		
+		}
+
+		function drawcartesian(json) {
+			// Based on http://bl.ocks.org/mbostock/4339184
+			var width = 960;
+			var height = 900;
+
+			var tree = d3.layout.tree().size([height, width - 160]);
+
+			var diagonal = d3.svg.diagonal().projection(function(d) { return [d.y, d.x]; });
+
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", width)
+						.attr("height", height)
+						.append("g")
+						.attr("transform", "translate(40,0)");
+
+			var nodes = tree.nodes(json);
+			var links = tree.links(nodes);
+
+			var link  = svg.selectAll("path.link")
+							.data(links)
+							.enter()
+							.append("path")
+							.attr("class", "link")
+							.attr("d", diagonal);
+
+			var node  = svg.selectAll("g.node")
+							.data(nodes)
+							.enter()
+							.append("g")
+							.attr("class", function () {d.type + " node"})
+							.attr("transform",
+									function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+
+			node.append(function(d) {return "circle"}).attr("r", 4.5);
+
+			node.append("a")
+				.attr('xlink:href',function(d) { return d.link}).append("text")
+				.attr("dx", function(d) { return d.children ? -8 : 8; })
+				.attr("dy", 3)
+				.attr("text-anchor", function(d) { return d.children ? "end" : "start"; })
+				.text(function(d) { return d.name; });
+
+			d3.select(self.frameElement).style("height", height + "px");
+		}
+
+	</script>
+	<body>
+		<div style="text-align:center;">
+			<span style="display:inline-block;background-color:yellow" id="error"/>
+		</div>
+		<svg id="mySvg" width="258" height="302">
+			<defs id="mdef">
+				<pattern id="image" x="0" y="0" height="258" width="302">
+					<image x="0" y="0" width="25.8px" height="30.2" xlink:href="css/logo.png"></image>
+				</pattern>
+			</defs>
+		</svg>
+	</body>
