@@ -9,4 +9,10 @@ function updatetoc () {
         $('#notebook-container').css('margin-right','1em');
 }
 window.updatetoc = updatetoc;
-$([IPython.events]).on('notebook_loaded.Notebook', updatetoc);
+updatetoc(); // First run
+
+// See also 
+// https://github.com/ipython-contrib/jupyter_contrib_nbextensions/issues/664
+$([IPython.events]).on('execute.CodeCell', updatetoc);
+$([IPython.events]).on('create.Cell', updatetoc);
+$([IPython.events]).on('delete.Cell', updatetoc);
