@@ -1,4 +1,3 @@
-%%javascript
 function updatetoc () {
         console.log('Updating TOC');
         $('.toc').remove();
