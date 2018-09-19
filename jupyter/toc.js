@@ -8,15 +8,15 @@ function updatetoc () {
 		last = "h1";
 		$('.text_cell.rendered').each(function (idx) {
 			el = $(this).find('.rendered_html').children().first();
-			console.log(el.html())
+			//console.log(el.html())
 			if (el.is('h4')) {D = D+1;num = A+"."+B+"."+C+"."+D;};
 			if (el.is('h3')) {C = C+1;D = 0;num = A+"."+B+"."+C;};
 			if (el.is('h2')) {B = B+1;C = 0;D = 0;num = A+"."+B;};
 			if (el.is('h1')) {A = A+1;B = 0;C = 0;D = 0;num = A+".";};
 			if (el[0].tagName.toLowerCase() == last) {
-				$('#toclist').find('ol.toc').last().append('<li><a href="#'+num+'">'+el.html()+'</li>'); 
+				$('#toclist').find('ol.toc').last().append('<li><a href="'+el.find('a').attr('href')+'">'+el.html()+'</li>'); 
 			} else {
-				$('#toclist').find('li').last().append('<ol class="toc">'+'<li><a href="#'+num+'">'+el.html()+'</ol>'); 
+				$('#toclist').find('li').last().append('<ol class="toc">'+'<li><a href="#'+el.find('a').attr('href')+'">'+el.html()+'</ol>'); 
 			}
 			last = el[0].tagName.toLowerCase();
 			el.html("<span class='toc'>" + num + " </span>" + el.html()); 
@@ -43,8 +43,18 @@ function updatetoc () {
 window.updatetoc = updatetoc;
 updatetoc(); // First run
 
+$('h1').css('margin-top',0);
+$('h2').css('margin-top',0);
+$('h3').css('margin-top',0);
+$('h4').css('margin-top',0);
+
 // See also 
 // https://github.com/ipython-contrib/jupyter_contrib_nbextensions/issues/664
-$([IPython.events]).on('execute.CodeCell', updatetoc);
-$([IPython.events]).on('create.Cell', updatetoc);
+$([IPython.events]).on('rendered.MarkdownCell', updatetoc);
 $([IPython.events]).on('delete.Cell', updatetoc);
+
+// Save some space by hiding input/output prompt column.
+$('.prompt').hide()
+// Change border color of executing cell
+$([IPython.events]).on('execute.CodeCell', function () {$('.running').css('border','1px yellow solid')})
+$([IPython.events]).on('finished_execute.CodeCell', function () {$('.code_cell').css('border','');$('.prompt').hide()})
