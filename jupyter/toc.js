@@ -56,5 +56,5 @@ $([IPython.events]).on('delete.Cell', updatetoc);
 // Save some space by hiding input/output prompt column.
 $('.prompt').hide()
 // Change border color of executing cell
-$([IPython.events]).on('execute.CodeCell', function () {$('.running').css('border','1px yellow solid')})
+$([IPython.events]).on('execute.CodeCell', function () {$('.running').css('border','1px yellow solid');$('.prompt').hide()})
 $([IPython.events]).on('finished_execute.CodeCell', function () {$('.code_cell').css('border','');$('.prompt').hide()})
