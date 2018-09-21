@@ -3,22 +3,23 @@ function updatetoc () {
 		$('.toc').remove();
 		A = 0;B = 0;C = 0;D = 0;
 		//<h1 class="toc" id="TOC">Table of Contents</h1>
-		$('body').append('<div id="toclist" class="toc"><ol class="toc"></ol>')
+		$('body').append('<div id="toclist" class="toc"><ol class="toc" level="h1"></ol>')
 		//$('#toclist').hide();
-		last = "h1";
+		taglast = "h1";
 		$('.text_cell.rendered').each(function (idx) {
 			el = $(this).find('.rendered_html').children().first();
 			//console.log(el.html())
+			tag = el[0].tagName.toLowerCase();
 			if (el.is('h4')) {D = D+1;num = A+"."+B+"."+C+"."+D;};
 			if (el.is('h3')) {C = C+1;D = 0;num = A+"."+B+"."+C;};
 			if (el.is('h2')) {B = B+1;C = 0;D = 0;num = A+"."+B;};
 			if (el.is('h1')) {A = A+1;B = 0;C = 0;D = 0;num = A+".";};
-			if (el[0].tagName.toLowerCase() == last) {
-				$('#toclist').find('ol.toc').last().append('<li><a href="'+el.find('a').attr('href')+'">'+el.html()+'</li>'); 
+			if (tag <= taglast) {
+				$('#toclist').find("[level='"+tag+"']").last().append('<li><a href="'+el.find('a').attr('href')+'">'+el.html()+'</li>'); 
 			} else {
-				$('#toclist').find('li').last().append('<ol class="toc">'+'<li><a href="#'+el.find('a').attr('href')+'">'+el.html()+'</ol>'); 
+				$('#toclist').find('li').last().append('<ol class="toc" level="'+tag+'"">'+'<li><a href="#'+el.find('a').attr('href')+'">'+el.html()+'</ol>'); 
 			}
-			last = el[0].tagName.toLowerCase();
+			taglast = tag;
 			el.html("<span class='toc'>" + num + " </span>" + el.html()); 
 		})
 		$('#toclist').find('ol').css("list-style-type","decimal");
