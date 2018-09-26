@@ -41,21 +41,19 @@ function updatetoc () {
 		$('#toclist2').find('ol').css('padding-left','1.1em');
 		$('#notebook-container').css('margin-right','1em');
 }
-window.updatetoc = updatetoc;
 updatetoc(); // First run
-
-$('h1').css('margin-top',0);
-$('h2').css('margin-top',0);
-$('h3').css('margin-top',0);
-$('h4').css('margin-top',0);
 
 // See also 
 // https://github.com/ipython-contrib/jupyter_contrib_nbextensions/issues/664
+window.updatetoc = updatetoc;
 $([IPython.events]).on('rendered.MarkdownCell', updatetoc);
 $([IPython.events]).on('delete.Cell', updatetoc);
 
 // Save some space by hiding input/output prompt column.
-$('.prompt').hide()
-// Change border color of executing cell
-$([IPython.events]).on('execute.CodeCell', function () {$('.running').css('border','1px yellow solid');$('.prompt').hide()})
-$([IPython.events]).on('finished_execute.CodeCell', function () {$('.code_cell').css('border','');$('.prompt').hide()})
+$('<style>.prompt {display: none}</style>').appendTo('head');
+
+$('<style>h1,h2,h3,h4,h5,h6 {margin-top:0;}</style>').appendTo('head');
+$('<style>.rendered_html h1:first-child,h2:first-child,h3:first-child,h4:first-child,h5:first-child,h6:first-child {margin-top:0px}</style>').appendTo('head');
+$('<style>div.running {border: 1px yellow solid}</style>').appendTo('head');
+//$([IPython.events]).on('execute.CodeCell', function () {$('.running').css('border','2px yellow solid');})
+//$([IPython.events]).on('finished_execute.CodeCell', function () {$('.code_cell').css('border','');})
