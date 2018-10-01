@@ -24,7 +24,10 @@ function updatetoc () {
 		})
 
 		$('h1').first().before('<h1 class="toc" id="TOC">Table of Contents</h1>');
-		$('#toclist').find('ol').css("list-style-type","decimal");
+		$('#toclist').find('ol')
+			.css("list-style-type","decimal")
+			.css('padding-left','1em')
+			
 		$('#toclist').css('margin-top','1em');
 		$('h1').first().before('<h1 class="toc" id="TOC">Table of Contents</h1>');
 		$('#toclist').detach().insertAfter('#TOC');
@@ -40,7 +43,7 @@ function updatetoc () {
 					.css('overflow-x','scroll')
 					.addClass('toc')
 
-		$('#ipython-main-app').css('margin-left','10em');
+		$('#ipython-main-app').css('margin-left','18em');
 
 		$('#toclist2').find('ol').first().css('white-space','nowrap');
 		$('#toclist2').find('ol').css('padding-left','1.1em');
