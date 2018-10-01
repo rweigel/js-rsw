@@ -26,7 +26,8 @@ function updatetoc () {
 		$('h1').first().before('<h1 class="toc" id="TOC">Table of Contents</h1>');
 		$('#toclist').find('ol')
 			.css("list-style-type","decimal")
-			.css('padding-left','1em')
+			
+		$('#toclist').css('padding-left','1em')
 
 		$('#toclist').css('margin-top','1em');
 		$('h1').first().before('<h1 class="toc" id="TOC">Table of Contents</h1>');
