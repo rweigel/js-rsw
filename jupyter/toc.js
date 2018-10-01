@@ -6,9 +6,8 @@ function updatetoc () {
 		$('body').append('<div id="toclist" class="toc"><ol class="toc" level="h1"></ol>')
 		//$('#toclist').hide();
 		taglast = "h1";
-		$('.text_cell.rendered').each(function (idx) {
-			el = $(this).find('.rendered_html').children().first();
-			//console.log(el.html())
+		$('h1,h2,h3,h4,h5,h6').each(function (idx) {
+			el = $(this);
 			tag = el[0].tagName.toLowerCase();
 			if (el.is('h4')) {D = D+1;num = A+"."+B+"."+C+"."+D;};
 			if (el.is('h3')) {C = C+1;D = 0;num = A+"."+B+"."+C;};
@@ -21,6 +20,7 @@ function updatetoc () {
 			}
 			taglast = tag;
 			el.html("<span class='toc'>" + num + " </span>" + el.html()); 
+			//console.log(num);
 		})
 		$('#toclist').find('ol').css("list-style-type","decimal");
 		$('#toclist').css('margin-top','1em');
@@ -32,7 +32,7 @@ function updatetoc () {
 					.attr('id','toclist2')
 					.prependTo('#site')
 					.css('position','fixed')
-					.css('width','10em')
+					.css('width','20em')
 					.css('margin-left','1em')
 					.css('margin-top','1em')
 					.addClass('toc')
