@@ -16,30 +16,42 @@ function updatetoc () {
 			if (tag <= taglast) {
 				$('#toclist').find("[level='"+tag+"']").last().append('<li><a href="'+el.find('a').attr('href')+'">'+el.html()+'</li>'); 
 			} else {
-				$('#toclist').find('li').last().append('<ol class="toc" level="'+tag+'"">'+'<li><a href="#'+el.find('a').attr('href')+'">'+el.html()+'</ol>'); 
+				$('#toclist').find('li').last().append('<ol class="toc" level="'+tag+'"">'+'<li><a href="'+el.find('a').attr('href')+'">'+el.html()+'</ol>'); 
 			}
 			taglast = tag;
 			el.html("<span class='toc'>" + num + " </span>" + el.html()); 
 			//console.log(num);
 		})
-		$('#toclist').find('ol').css("list-style-type","decimal");
-		$('#toclist').css('margin-top','1em');
+
 		$('h1').first().before('<h1 class="toc" id="TOC">Table of Contents</h1>');
-		$('#toclist').detach().insertAfter('#TOC');
-		
+
+		$('#toclist').find('ol')
+						.css("list-style-type","decimal")
+						.css("padding-left","1em")
+		//$('#toclist').css('margin-top','1em');
+		$('#toclist').detach().insertAfter('#TOC');		
 		$('#toclist').click();
+
+		$("#site").attr('style','display:flex;');
 		$('#toclist').clone()
 					.attr('id','toclist2')
 					.prependTo('#site')
-					.css('position','fixed')
-					.css('width','20em')
-					.css('margin-left','1em')
-					.css('margin-top','1em')
-					.addClass('toc')
-					.css('z-index',1)
-		$('#toclist2').find('ol').first().css('overflow-x','scroll').css('white-space','nowrap');
-		$('#toclist2').find('ol').css('padding-left','1.1em');
-		$('#notebook-container').css('margin-right','1em');
+
+		$('#ipython-main-app')
+				.css('float','right')
+
+		$('#toclist2 ol').css('padding-left','0.5em');
+
+		$('#toclist2')
+				.addClass('toc')
+				.css('float','left')
+				.css('padding-top','20px')
+				.css('padding-left','20px')
+				.css('width','20%')
+				.css('overflow-x','scroll')
+				.css('white-space','nowrap');
+
+		$('#toclist').css('padding-top','1em')
 }
 updatetoc(); // First run
 
