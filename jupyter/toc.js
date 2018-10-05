@@ -24,12 +24,14 @@ function updatetoc () {
 		})
 
 		$('h1').first().before('<h1 class="toc" id="TOC">Table of Contents</h1>');
+
+		// CSS is a mess. Re-do.
 		$('#toclist').find('ol')
 			.css("list-style-type","decimal")
 			
 		$('#toclist').css('padding-left','1em')
 		$('#toclist').css('margin-top','1em');
-		
+
 		$('#toclist').detach().insertAfter('#TOC');
 		
 		$('#toclist').click();
@@ -38,13 +40,13 @@ function updatetoc () {
 					.prependTo('#site')
 					.css('position','fixed')
 					.css('width','15em')
-					.css('padding-left','1em')
+					.css('padding-left','1.5em')
 					.css('margin-top','20px')
 					.css('overflow-x','scroll')
 					.addClass('toc')
 
 		$('#toclist2').find('ol').first().css('white-space','nowrap');
-		$('#toclist2').find('ol').css('padding-left','1.1em');
+		$('#toclist2').find('ol').css('padding-left','1em');
 		$('#notebook-container').css('margin-right','1em');
 		$('#ipython-main-app').css('margin-left','15em');
 
@@ -60,7 +62,9 @@ $([IPython.events]).on('delete.Cell', updatetoc);
 // Save some space by hiding input/output prompt column.
 $('<style>.prompt {display: none}</style>').appendTo('head');
 
+// Change style for all newly created elements
 $('<style>h1,h2,h3,h4,h5,h6 {margin-top:0;}</style>').appendTo('head');
+$('<style>pre {white-space: pre}</style>');
 $('<style>.rendered_html h1:first-child,h2:first-child,h3:first-child,h4:first-child,h5:first-child,h6:first-child {margin-top:0px}</style>').appendTo('head');
 $('<style>div.running {border: 1px yellow solid}</style>').appendTo('head');
 //$([IPython.events]).on('execute.CodeCell', function () {$('.running').css('border','2px yellow solid');})
