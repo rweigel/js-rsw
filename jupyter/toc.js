@@ -59,12 +59,11 @@ window.updatetoc = updatetoc;
 $([IPython.events]).on('rendered.MarkdownCell', updatetoc);
 $([IPython.events]).on('delete.Cell', updatetoc);
 
+// Change style for all newly created elements
 // Save some space by hiding input/output prompt column.
 $('<style>.prompt {display: none}</style>').appendTo('head');
-
-// Change style for all newly created elements
 $('<style>h1,h2,h3,h4,h5,h6 {margin-top:0;}</style>').appendTo('head');
-$('<style>pre {white-space: pre}</style>');
+$('<style>pre {white-space: pre}</style>').appendTo('head');
 $('<style>.rendered_html h1:first-child,h2:first-child,h3:first-child,h4:first-child,h5:first-child,h6:first-child {margin-top:0px}</style>').appendTo('head');
 $('<style>div.running {border: 1px yellow solid}</style>').appendTo('head');
 //$([IPython.events]).on('execute.CodeCell', function () {$('.running').css('border','2px yellow solid');})
