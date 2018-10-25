@@ -53,7 +53,7 @@ function updatetoc () {
 			.css('padding-left','1.5em')
 			.css('white-space','nowrap')
 			.css('border','2px solid blue')
-
+			.css('background-color', $('body').css('background-color'))
 		$('#notebook-container').css('margin-right','1em');
 		$('#ipython-main-app').css('margin-left','15em');
 
