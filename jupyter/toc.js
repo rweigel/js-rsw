@@ -39,10 +39,14 @@ function updatetoc () {
 					.attr('id','toclist2')
 					.prependTo('#site')
 					.css('position','fixed')
-					.css('width','15em')
-					.css('padding-left','1.5em')
-					.css('margin-top','20px')
-					.css('overflow-x','scroll')
+					.css('padding-left','0.5em')
+					.css('margin-top','5px')
+					.css('margin-left','20px')
+					.css('overflow','scroll')
+					.css('height','100vh')					
+					.css('background-color', $('body').css('background-color'))
+					.css('border','1px solid blue')
+					.hover(function () {$(this).css('z-index',10)}, function () {$(this).css('z-index','')})
 					.addClass('toc')
 
 		$('#toclist2').find('ol').first().css('white-space','nowrap');
