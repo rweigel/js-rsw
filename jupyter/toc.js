@@ -44,15 +44,15 @@ function updatetoc () {
 					.css('margin-left','0px')
 					.css('overflow','scroll')
 					.css('height','100vh')			
+					.hover(function () {$(this).css('z-index',10)}, function () {$(this).css('z-index','')})
 					.addClass('toc')
 
 		$('#toclist2').find('ol').css('padding-left','1em');
 
 		$('#toclist2').find('ol').first()
-			.css('white-space','nowrap')
 			.css('padding-left','1.5em')
+			.css('white-space','nowrap')
 			.css('border','2px solid blue')
-			.hover(function () {$(this).css('z-index',10)}, function () {$(this).css('z-index','')})
 
 		$('#notebook-container').css('margin-right','1em');
 		$('#ipython-main-app').css('margin-left','15em');
