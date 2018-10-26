@@ -51,12 +51,12 @@ function updatetoc () {
 		$('#toclist2').find('ol').first()
 			.css('padding-left','1.5em')
 			.css('white-space','nowrap')
-			.css('border','2px solid blue')
+			.css('border','1px solid black')
 			.css('background-color', $('body').css('background-color'))
 			.hover(function () {$('#toclist2').css('z-index',10)}, function () {$('#toclist2').css('z-index','')})
 			// Would be better to use $(this) instead of $('#toclist2'), but
 			// just changing z-index of ol element does not work.
-			
+
 		$('#notebook-container').css('margin-right','1em');
 		$('#ipython-main-app').css('margin-left','15em');
 
