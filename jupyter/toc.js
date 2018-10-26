@@ -40,11 +40,10 @@ function updatetoc () {
 					.prependTo('#site')
 					.css('position','fixed')
 					.css('padding','0.5em')
-					.css('margin-top','20px')
+					.css('margin-top','15px')
 					.css('margin-left','0px')
 					.css('overflow','scroll')
 					.css('height','100vh')			
-					.hover(function () {$(this).css('z-index',10)}, function () {$(this).css('z-index','')})
 					.addClass('toc')
 
 		$('#toclist2').find('ol').css('padding-left','1em');
@@ -54,6 +53,8 @@ function updatetoc () {
 			.css('white-space','nowrap')
 			.css('border','2px solid blue')
 			.css('background-color', $('body').css('background-color'))
+			.hover(function () {$(this).css('z-index',10)}, function () {$(this).css('z-index','')})
+
 		$('#notebook-container').css('margin-right','1em');
 		$('#ipython-main-app').css('margin-left','15em');
 
