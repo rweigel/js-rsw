@@ -57,7 +57,7 @@ function updatetoc () {
 			// Would be better to use $(this) instead of $('#toclist2'), but
 			// just changing z-index of ol element does not work.
 
-		//$('#notebook-container').css('margin-right','1em');
+		$('#notebook-container').css('margin-left','18em');
 		$('#ipython-main-app').css('margin-left','15em');
 
 }
