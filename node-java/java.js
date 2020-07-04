@@ -24,7 +24,7 @@ if (0) {
 if (0) {
 	// Works
 	//java -Djava.awt.headless=true -jar autoplot.jar org.virbo.autoplot.AutoplotUI --script dumpMetadata.jy	
-	var strArray = java.newArray('java.lang.String',['--script','dumpMetadata.jy']);
+	var strArray = java.newArray('java.lang.String',['--script','dumpMetadata.jyds']);
 	var result = java.callStaticMethodSync("org.virbo.autoplot.AutoplotUI", "main", strArray);
 	console.log(result) // null
 }
