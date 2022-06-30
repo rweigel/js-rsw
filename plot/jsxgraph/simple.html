@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Simple</title>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/1.4.2/jsxgraph.css"></link>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/1.4.2/jsxgraphcore.js"></script>
+		<script type="text/javascript" src="equipotentials.js"></script>
+		<style>
+			.jxgbox {
+				border: none;
+				width: 500px;
+				height: 500px;
+			}
+		</style>			
+		<link
+			id='katex-css'
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"
+		/>
+		<script
+			src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js">
+		</script>
+	</head>
+	<body>
+		Artifacts to right of "x" and above "y" due to ticks
+		<div id="jsxbox" class="jxgbox"></div>
+		<script>
+			//JXG.Options.text.display = 'html';
+			//JXG.Options.text.useMathJax = true;
+			var nav = false;
+			JXG.Options.text.useKatex = true;
+			var board = JXG.JSXGraph.initBoard("jsxbox",
+				{
+					boundingbox: [-0.5, 4.5, 4.5, -0.5],
+					grid: {gridX: false, gridY: false},
+					showCopyright: false,
+					axis: {
+							ticks:
+									{
+										label: {
+											fontSize: 14,
+											cssDefaultStyle: 'font-family: Times'
+										}
+									}
+					},
+					defaultAxes: {
+						y: {
+								strokeColor: 'black',
+								margin: -18,
+								name: 'y',
+								withLabel: true,
+								label: {
+									position: 'rt',
+									offset: [0, -5],
+									anchorX: 'middle',
+									anchorY: 'bottom',
+									fontSize: 14,
+									cssDefaultStyle: 'font-family: Times'
+								},
+								ticks: { 
+									strokeColor: 'black',
+									strokeOpacity: 1,
+									ticksDistance: 1,
+									insertTicks: false,
+									minorTicks: false,
+									minorHeight: 0,
+									visible: true,
+									majorHeight: 3,
+									label: {
+										visible: 'inherit',
+										anchorX: 'right',
+										anchorY: 'middle',
+										fontSize: 14,
+										offset: [-3, 0]
+									}
+								}
+						},
+						x: {
+								strokeColor: 'black',
+								margin: -16,
+								name: 'x',
+								withLabel: true,
+								label: {
+									position: 'rt',
+									offset: [0, 2],
+									anchorX: 'left',
+									anchorY: 'middle',
+									fontSize: 14,
+									cssDefaultStyle: 'font-family: Times'
+								},
+								ticks: { 
+									strokeColor: 'black',
+									strokeOpacity: 1,
+									ticksDistance: 1,
+									insertTicks: false,
+									minorTicks: false,
+									minorHeight: 0,
+									visible: true,
+									majorHeight: 3,
+									label: {
+										visible: 'inherit',
+										anchorX: 'middle',
+										anchorY: 'top',
+										fontSize: 14,
+										offset: [0, -3]
+									}
+								}
+							}
+					},
+					showNavigation: nav,
+					pan: nav,
+					zoom: nav,
+					selection: {
+						enabled: false,
+						name: 'selectionPolygon',
+						needShift: false,  // mouse selection needs pressing of the shift key
+						needCtrl: false,    // mouse selection needs pressing of the shift key
+						withLines: true,  // Selection polygon has border lines
+						vertices: {
+							visible: false
+						},
+						fillColor: 'gray',
+						visible: true      // Initial visibility. Should be set to false always
+					}
+				});
+
+				board.on('stopselecting', function(){
+					var box = board.stopSelectionMode(),
+					// bbox has the coordinates of the selection rectangle.
+					// Attention: box[i].usrCoords have the form [1, x, y], i.e.
+					// are homogeneous coordinates.
+					bbox = box[0].usrCoords.slice(1).concat(box[1].usrCoords.slice(1));
+					// Set a new bounding box
+					board.setBoundingBox(bbox, false);
+				});
+
+			if (0) {
+				var xaxis = board.create('axis', [ [0,0],[1,0] ],
+					{
+						drawZero: false,
+						withTicks: false,
+						drawLabels: false
+					});
+			}
+			if (0) {
+				board.create('text',[1,-0.5,'1'], {anchorX: 'middle'})
+				board.create('text',[2,-0.5,'2'], {anchorX: 'middle'})
+				board.create('text',[3,-0.5,'3'], {anchorX: 'middle'})
+				board.create('text',[3,-0.5,'4'], {anchorX: 'middle'})
+				board.create('line',[[0,0],[5,0]], {lastArrow: true, straightFirst:false, straightLast:false, strokeWidth:2});
+			}
+
+			var grf = board.create('functiongraph', [(x) => {return 4-(x-2)*(x-2)}, 0, 4],
+									{
+										label: 'x^2',
+										strokeColor: '#000',
+										highlight: false
+									});
+			board.create('segment', [[0.5, 4.0], [1.0, 4.0]],
+							{
+								strokeOpacity: 1,
+								strokeWidth: 1,
+								strokeColor: '#000',
+								highlight: false,
+							});
+			board.create('text',[1.0, 4.0,' x^2'],
+							{
+								cssStyle: 'margin-left: 0.5em',
+								highlight: false,
+								anchorX: 'left',
+							})
+			if (0) {
+				var lgnd = board.create('legend', [2.5, 4.5],
+						{
+							labels: ['x^2'],
+							colors: ['black'],
+							strokeWidth: 2
+						});
+				lgnd.lines[0].label.visProp.offset = [0,0]
+				lgnd.update()
+			}
+		</script>
+	</body>
+</html>
